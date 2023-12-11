@@ -7,17 +7,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="SchoolProjectA_ClientMVVM.Views.GlobalView">
+             x:Class="SchoolProjectA_ClientMVVM.Views.GlobalView"
+			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
+			 x:DataType="vm:GlobalViewModel">
   <DockPanel>
-	  <Button DockPanel.Dock="Bottom"
-			  HorizontalAlignment="Stretch"
-			  HorizontalContentAlignment="Center"
-			  x:CompileBindings="False"
-			  Command="{Binding $parent[Window].DataContext.Disconnect}">
-		  Disconnect
-	  </Button>
-	  <StackPanel>
-		  <TextBlock>Global View</TextBlock>
+	  <!-- Nav bar -->
+	  <StackPanel DockPanel.Dock="Left"
+				  Width="150">
+		  <Button HorizontalAlignment="Center"
+				  HorizontalContentAlignment="Center"
+				  Command="{Binding ShowAccounts}">
+			  Comptes
+		  </Button>
+		  <Button HorizontalAlignment="Center"
+				  HorizontalContentAlignment="Center"
+				  Command="{Binding ShowTransactions}">
+			  Transactions
+		  </Button>
+		  <Button HorizontalAlignment="Center"
+				  HorizontalContentAlignment="Center"
+				  Command="{Binding ShowTags}">
+			  Tags
+		  </Button>
+		  <Button HorizontalAlignment="Center"
+				  HorizontalContentAlignment="Center"
+				  x:CompileBindings="False"
+				  Command="{Binding $parent[Window].DataContext.Disconnect}">
+			  Disconnect
+		  </Button>
 	  </StackPanel>
+	  <!-- Nav bar -->
+
+	  <!-- Global view -->
+	  <ContentControl Content="{Binding ContainedViewModel}" />
+	  <!-- Global view -->
   </DockPanel>
 </UserControl>
