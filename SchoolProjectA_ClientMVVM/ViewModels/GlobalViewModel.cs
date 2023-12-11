@@ -23,18 +23,18 @@ public class GlobalViewModel : ViewModelBase
     public void ShowTransactions()
     {
         System.Diagnostics.Debug.WriteLine("Clic sur transaction");
-        // ContainedViewModel = new TransactionsViewModel();
+        ContainedViewModel = new TransactionsViewModel();
     }
 
     public void ShowAccounts()
     {
         System.Diagnostics.Debug.WriteLine("Clic sur account");
-        // ContainedViewModel = new AccountsViewModel();
+        ContainedViewModel = new AccountsViewModel();
     }
 
     public void ShowTags()
     {
         System.Diagnostics.Debug.WriteLine("Clic sur tag");
-        // ContainedViewModel = new TagsViewModel();
+        ContainedViewModel = new TagsViewModel();
     }
 }
