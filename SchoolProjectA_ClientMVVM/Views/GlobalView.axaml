@@ -8,5 +8,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SchoolProjectA_ClientMVVM.Views.GlobalView">
-  Welcome to Avalonia!
+  <DockPanel>
+	  <Button DockPanel.Dock="Bottom"
+			  HorizontalAlignment="Stretch"
+			  HorizontalContentAlignment="Center"
+			  x:CompileBindings="False"
+			  Command="{Binding $parent[Window].DataContext.Disconnect}">
+		  Disconnect
+	  </Button>
+	  <StackPanel>
+		  <TextBlock>Global View</TextBlock>
+	  </StackPanel>
+  </DockPanel>
 </UserControl>
