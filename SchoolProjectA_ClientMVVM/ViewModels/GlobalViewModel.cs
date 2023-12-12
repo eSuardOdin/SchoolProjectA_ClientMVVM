@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using SchoolProjectA_ClientMVVM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,15 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class GlobalViewModel : ViewModelBase
 {
     private ViewModelBase _containedViewModel;
-    public GlobalViewModel()
+    public Moni MyMoni { get; }
+    public GlobalViewModel(Moni myMoni)
     {
         _containedViewModel = new AccountsViewModel();
+        MyMoni = myMoni;
+        /* 
+         * Debug 
+         */
+        System.Diagnostics.Debug.WriteLine($"{MyMoni.MoniLogin}:\n\t- Nom: {MyMoni.LastName}\n\t- Prénom: {MyMoni.FirstName}");
     }
 
     public ViewModelBase ContainedViewModel

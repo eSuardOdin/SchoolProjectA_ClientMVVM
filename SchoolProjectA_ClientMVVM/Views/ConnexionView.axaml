@@ -15,7 +15,8 @@
 				HorizontalAlignment="Stretch"
 				HorizontalContentAlignment="Center"
 				x:CompileBindings="False"
-				Command="{Binding $parent[Window].DataContext.Connect}">
+				Command="{Binding $parent[Window].DataContext.Connect}"
+				IsEnabled="{Binding $parent[Window].DataContext.IsButtonEnabled}">
 			Connect
 		</Button>
 		<StackPanel>
