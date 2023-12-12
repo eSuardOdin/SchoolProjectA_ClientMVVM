@@ -26,10 +26,10 @@
 
 
   <ItemGroup>
-    <Compile Update="Views\SubViews\TagsView.axaml.cs">
+    <Compile Update="Views\GlobalViews\TagsView.axaml.cs">
       <DependentUpon>TagsView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\SubViews\TransactionsView.axaml.cs">
+    <Compile Update="Views\GlobalViews\TransactionsView.axaml.cs">
       <DependentUpon>TransactionsView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

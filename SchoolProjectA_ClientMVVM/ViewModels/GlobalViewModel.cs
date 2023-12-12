@@ -13,7 +13,7 @@ public class GlobalViewModel : ViewModelBase
     public Moni MyMoni { get; }
     public GlobalViewModel(Moni myMoni)
     {
-        _containedViewModel = new AccountsViewModel();
+        _containedViewModel = new AccountsViewModel(myMoni.MoniId);
         MyMoni = myMoni;
         /* 
          * Debug 
@@ -36,7 +36,7 @@ public class GlobalViewModel : ViewModelBase
     public void ShowAccounts()
     {
         System.Diagnostics.Debug.WriteLine("Clic sur account");
-        ContainedViewModel = new AccountsViewModel();
+        ContainedViewModel = new AccountsViewModel(MyMoni.MoniId);
     }
 
     public void ShowTags()
