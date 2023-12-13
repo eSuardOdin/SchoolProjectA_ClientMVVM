@@ -30,7 +30,7 @@ public class GlobalViewModel : ViewModelBase
     public void ShowTransactions()
     {
         System.Diagnostics.Debug.WriteLine("Clic sur transaction");
-        ContainedViewModel = new TransactionsViewModel();
+        ContainedViewModel = new TransactionsViewModel(MyMoni.MoniId);
     }
 
     public void ShowAccounts()

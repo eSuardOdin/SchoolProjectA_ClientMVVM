@@ -2,28 +2,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 
-             x:Class="SchoolProjectA_ClientMVVM.Views.ShowAccountsView"
+             x:Class="SchoolProjectA_ClientMVVM.Views.ShowTransactionsView"
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
-			 x:DataType="vm:ShowAccountsViewModel">
-	
-	
-	<ListBox ItemsSource="{Binding BankAccounts}"
+			 x:DataType="vm:ShowTransactionsViewModel">
+
+	<ListBox ItemsSource="{Binding Transactions}"
 			 BorderBrush="Black"
 			 BorderThickness="1">
 		<ListBox.ItemTemplate>
 			<DataTemplate>
 				<Grid ColumnDefinitions="*, *, *, *">
 					<TextBlock Grid.Column="0"
-							   Text="{Binding BankAccountLabel}"/>
-					<TextBlock Grid.Column="1" 
-							   Text="{Binding BankAccountBalance, StringFormat={}{0}€}"/>
-					<Button Grid.Column="2">
-						Transactions
-					</Button>
+							   Text="{Binding TransactionLabel}"/>
+					<TextBlock Grid.Column="1"
+							   Text="{Binding TransactionDate}"/>
+					<TextBlock Grid.Column="2"
+							   Text="{Binding TransactionAmount, StringFormat={}{0}€}"/>
+					
 					<Panel HorizontalAlignment="Right"
-						   Grid.Column="3">	
+						   Grid.Column="3">
 						<Button Background="Red">
 							Supprimer
 						</Button>

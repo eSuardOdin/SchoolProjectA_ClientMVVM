@@ -12,6 +12,7 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class ShowAccountsViewModel : ViewModelBase
 {
     private ObservableCollection<BankAccount> _bankAccounts;
+    private int MoniId;
     //private List<BankAccount> _bankAccounts;
 
     // Accounts get and set
@@ -24,7 +25,8 @@ public class ShowAccountsViewModel : ViewModelBase
 
     public ShowAccountsViewModel(int moniId)
     {
-        InitializeAsync(moniId);
+        MoniId = moniId;
+        InitializeAsync(MoniId);
     }
 
 
