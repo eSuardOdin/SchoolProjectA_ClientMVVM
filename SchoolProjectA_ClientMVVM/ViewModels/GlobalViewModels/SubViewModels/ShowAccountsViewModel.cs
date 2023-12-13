@@ -36,10 +36,13 @@ public class ShowAccountsViewModel : ViewModelBase
         foreach(BankAccount bankAccount in bankAccounts) { System.Diagnostics.Debug.WriteLine(bankAccount.BankAccountLabel); }
         return bankAccounts;
     }
+    // Casting list to ObservableCollection
     private async void InitializeAsync(int moniId)
     {
         List<BankAccount> accounts = await LoadBankAccounts(moniId);
         BankAccounts = new ObservableCollection<BankAccount>(accounts);
     }
+    // Handling color to do
+
 }
 
