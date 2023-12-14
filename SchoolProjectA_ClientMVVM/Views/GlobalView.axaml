@@ -13,26 +13,37 @@
   <DockPanel>
 	  <!-- Nav bar -->
 	  <StackPanel DockPanel.Dock="Left"
-				  Width="150">
-		  <Button HorizontalAlignment="Center"
+				  Width="150"
+				  Spacing="15"
+				  Background="#885555">
+		  <Button HorizontalAlignment="Stretch"
 				  HorizontalContentAlignment="Center"
-				  Command="{Binding ShowAccounts}">
+				  Command="{Binding ShowAccounts}"
+				  FontWeight="Bold"
+				  Margin="4"
+				  Foreground="Beige">
 			  Comptes
 		  </Button>
-		  <Button HorizontalAlignment="Center"
+		  <Button HorizontalAlignment="Stretch"
 				  HorizontalContentAlignment="Center"
-				  Command="{Binding ShowTransactions}">
+				  Command="{Binding ShowTransactions}"
+				  FontWeight="Bold"
+				  Margin="4">
 			  Transactions
 		  </Button>
-		  <Button HorizontalAlignment="Center"
+		  <Button HorizontalAlignment="Stretch"
 				  HorizontalContentAlignment="Center"
-				  Command="{Binding ShowTags}">
+				  Command="{Binding ShowTags}"
+				  FontWeight="Bold"
+				  Margin="4">
 			  Tags
 		  </Button>
-		  <Button HorizontalAlignment="Center"
+		  <Button HorizontalAlignment="Stretch"
 				  HorizontalContentAlignment="Center"
 				  x:CompileBindings="False"
-				  Command="{Binding $parent[Window].DataContext.Disconnect}">
+				  Command="{Binding $parent[Window].DataContext.Disconnect}"
+				  FontWeight="Bold"
+				  Margin="4">
 			  Disconnect
 		  </Button>
 	  </StackPanel>

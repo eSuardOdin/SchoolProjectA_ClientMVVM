@@ -7,31 +7,31 @@
              x:Class="SchoolProjectA_ClientMVVM.Views.ShowAccountsView"
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:ShowAccountsViewModel">
-	
-	
-	<ListBox ItemsSource="{Binding BankAccounts}"
-			 BorderBrush="Black"
-			 BorderThickness="1">
-		<ListBox.ItemTemplate>
-			<DataTemplate>
-				<Grid ColumnDefinitions="*, *, *, *">
-					<TextBlock Grid.Column="0"
-							   Text="{Binding BankAccountLabel}"/>
-					<TextBlock Grid.Column="1" 
-							   Text="{Binding BankAccountBalance, StringFormat={}{0}€}"/>
-					<Button Grid.Column="2">
-						Transactions
-					</Button>
-					<Panel HorizontalAlignment="Right"
-						   Grid.Column="3">	
-						<Button Background="Red">
-							Supprimer
+
+	<StackPanel>
+		<ListBox ItemsSource="{Binding BankAccounts}"
+				 BorderBrush="Black"
+				 BorderThickness="1">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="*, *, *, *">
+						<TextBlock Grid.Column="0"
+								   Text="{Binding BankAccountLabel}"/>
+						<TextBlock Grid.Column="1" 
+								   Text="{Binding BankAccountBalance, StringFormat={}{0}€}"/>
+						<Button Grid.Column="2">
+							Transactions
 						</Button>
-					</Panel>
-				</Grid>
-			</DataTemplate>
-		</ListBox.ItemTemplate>
-	</ListBox>
-	
+						<Panel HorizontalAlignment="Right"
+							   Grid.Column="3">	
+							<Button Background="Red">
+								Supprimer
+							</Button>
+						</Panel>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</StackPanel>
 	
 </UserControl>

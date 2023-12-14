@@ -25,6 +25,9 @@ public class AccountsViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref this._accountsContentViewModel, value);
     }
 
-    
+    public void AddAccount()
+    {
+        AccountsContentViewModel = new AddAccountViewModel();
+    }
     
 }
