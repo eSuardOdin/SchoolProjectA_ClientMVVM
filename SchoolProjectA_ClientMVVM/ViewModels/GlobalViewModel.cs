@@ -44,4 +44,5 @@ public class GlobalViewModel : ViewModelBase
         System.Diagnostics.Debug.WriteLine("Clic sur tag");
         ContainedViewModel = new TagsViewModel();
     }
+
 }

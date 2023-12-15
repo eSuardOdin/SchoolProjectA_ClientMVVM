@@ -32,6 +32,16 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+		<Button
+			Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
+			x:CompileBindings="False"
+			Name="TestBtn">
+			Ajouter
+		</Button>
+		<!--="{Binding $parent[vm:AccountsView].AddAccount}">
+		{Binding $parent[4].AddAccountCommand, Mode=OneWay}-->
 	</StackPanel>
+
 	
 </UserControl>
+<!--"{Binding Path=DataContext.AddAccount, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"-->

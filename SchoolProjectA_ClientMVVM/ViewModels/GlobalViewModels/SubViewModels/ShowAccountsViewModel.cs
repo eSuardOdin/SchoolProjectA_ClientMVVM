@@ -29,7 +29,8 @@ public class ShowAccountsViewModel : ViewModelBase
         InitializeAsync(MoniId);
     }
 
-
+    // Event for button
+    
 
     // Load accounts
     private async Task<List<BankAccount>> LoadBankAccounts(int moniId)
