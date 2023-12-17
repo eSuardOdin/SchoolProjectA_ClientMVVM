@@ -17,7 +17,7 @@
 					<Grid ColumnDefinitions="*, *, *, *">
 						<TextBlock Grid.Column="0"
 								   Text="{Binding BankAccountLabel}"/>
-						<TextBlock Grid.Column="1" 
+						<TextBlock Grid.Column="1"
 								   Text="{Binding BankAccountBalance, StringFormat={}{0}€}"/>
 						<Button Grid.Column="2">
 							Transactions

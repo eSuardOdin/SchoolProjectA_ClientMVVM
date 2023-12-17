@@ -17,7 +17,19 @@ public class AddAccountViewModel : ViewModelBase
     public ReactiveCommand<Unit, BankAccount> AddCommand { get; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 
-
+    /// <summary>
+    /// Construcor, checking if bank account label is not null and allowing click if ok
+    /// </summary>
+    public AddAccountViewModel()
+    {
+        var isValidObservable = this.WhenAnyValue(
+            x => x.BankAccountLabel,
+            x => !string.IsNullOrWhiteSpace(x));
+        AddCommand = ReactiveCommand.Create(
+            () => CreateAccount() , isValidObservable);
+        CancelCommand = ReactiveCommand.Create(
+            () => { });
+    }
     
     public string BankAccountLabel
     {
@@ -29,5 +41,18 @@ public class AddAccountViewModel : ViewModelBase
     {
         get => _bankAccountBalance;
         set => this.RaiseAndSetIfChanged(ref this._bankAccountBalance, value);
+    }
+
+    /// <summary>
+    /// Bank account creation
+    /// </summary>
+    /// <returns>The bank account created in form</returns>
+    private BankAccount CreateAccount()
+    {
+        BankAccount ba = new();
+        ba.BankAccountLabel = this.BankAccountLabel;
+        ba.BankAccountBalance = this.BankAccountBalance;
+        System.Diagnostics.Debug.WriteLine($"{ba.BankAccountLabel.ToString()}: {ba.BankAccountBalance.ToString()}€");
+        return ba;
     }
 }

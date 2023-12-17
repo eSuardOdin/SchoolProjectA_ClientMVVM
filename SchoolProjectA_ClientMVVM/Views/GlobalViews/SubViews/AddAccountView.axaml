@@ -24,12 +24,14 @@
 							FormatString="0.00" />
 			<Grid ColumnDefinitions="*,*">
 				<Button HorizontalAlignment="Stretch"
-						HorizontalContentAlignment="Center">Ok</Button>
+						HorizontalContentAlignment="Center"
+						Command="{Binding AddCommand}">Ok</Button>
 				<Button Grid.Column="1"
 						HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Center"
-						Background="Red">
-					Cancel
+						Background="Red"
+						Command="{Binding CancelCommand}">
+					Annuler
 				</Button>
 			</Grid>
 		</StackPanel>

@@ -13,10 +13,7 @@ public class ShowAccountsViewModel : ViewModelBase
 {
     private ObservableCollection<BankAccount> _bankAccounts;
     private int MoniId;
-    //private List<BankAccount> _bankAccounts;
 
-    // Accounts get and set
-    //public List<BankAccount> BankAccounts
     public ObservableCollection<BankAccount> BankAccounts
     {
         get => _bankAccounts;
@@ -29,9 +26,7 @@ public class ShowAccountsViewModel : ViewModelBase
         InitializeAsync(MoniId);
     }
 
-    // Event for button
     
-
     // Load accounts
     private async Task<List<BankAccount>> LoadBankAccounts(int moniId)
     {
@@ -45,6 +40,8 @@ public class ShowAccountsViewModel : ViewModelBase
         List<BankAccount> accounts = await LoadBankAccounts(moniId);
         BankAccounts = new ObservableCollection<BankAccount>(accounts);
     }
+
+
     // Handling color to do
 
 }
