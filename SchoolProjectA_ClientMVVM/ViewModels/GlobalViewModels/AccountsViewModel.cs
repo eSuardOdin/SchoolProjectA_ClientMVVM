@@ -14,7 +14,6 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class AccountsViewModel : ViewModelBase
 {
     ViewModelBase _accountsContentViewModel;
-    //private ObservableCollection<BankAccount> _bankAccounts;
     private int MoniId {  get; set; }
     public ShowAccountsViewModel AccountsList { get; }
     public AccountsViewModel(int moniId)
@@ -22,7 +21,6 @@ public class AccountsViewModel : ViewModelBase
         MoniId = moniId;
         AccountsList = new(MoniId);
         _accountsContentViewModel = AccountsList;
-        //InitializeAsync(MoniId);
     }
 
     /// <summary>
@@ -33,23 +31,12 @@ public class AccountsViewModel : ViewModelBase
         get => _accountsContentViewModel;
         set => this.RaiseAndSetIfChanged(ref this._accountsContentViewModel, value);
     }
-    /*
-    /// <summary>
-    /// Change in Accounts list
-    /// </summary>
-    public ObservableCollection<BankAccount> BankAccounts
-    {
-        get => _bankAccounts;
-        set => this.RaiseAndSetIfChanged(ref this._bankAccounts, value);
-    }
-    */
 
     /// <summary>
     /// Showing add account form
     /// </summary>
     public async void AddAccount()
     {
-        //AccountsContentViewModel = new AddAccountViewModel();
         AddAccountViewModel addAccountVM = new AddAccountViewModel();
         Observable.Merge(
             addAccountVM.AddCommand,
@@ -69,24 +56,6 @@ public class AccountsViewModel : ViewModelBase
             });
         AccountsContentViewModel = addAccountVM;
     }
-
-
-    // Remonté depuis ShowAccountVM
-    /*
-    // Load accounts
-    private async Task<List<BankAccount>> LoadBankAccounts(int moniId)
-    {
-        List<BankAccount> bankAccounts = await Queries.GetMoniAccounts(moniId);
-        foreach (BankAccount bankAccount in bankAccounts) { System.Diagnostics.Debug.WriteLine(bankAccount.BankAccountLabel); }
-        return bankAccounts;
-    }
-    // Casting list to ObservableCollection
-    private async void InitializeAsync(int moniId)
-    {
-        List<BankAccount> accounts = await LoadBankAccounts(moniId);
-        BankAccounts = new ObservableCollection<BankAccount>(accounts);
-    }
-    */
 
 
 }
