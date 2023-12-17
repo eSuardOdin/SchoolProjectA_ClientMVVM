@@ -3,6 +3,7 @@ using SchoolProjectA_ClientMVVM.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ public class ShowAccountsViewModel : ViewModelBase
 {
     private ObservableCollection<BankAccount> _bankAccounts;
     private int MoniId;
-
+    public ReactiveCommand<int, Unit> DeleteBankAccountCommand { get; }
     public ObservableCollection<BankAccount> BankAccounts
     {
         get => _bankAccounts;
@@ -24,6 +25,7 @@ public class ShowAccountsViewModel : ViewModelBase
     {
         MoniId = moniId;
         InitializeAsync(MoniId);
+        DeleteBankAccountCommand = ReactiveCommand.Create<int>(DeleteAccount);
     }
 
     
@@ -42,6 +44,15 @@ public class ShowAccountsViewModel : ViewModelBase
     }
 
 
+    private async void DeleteAccount(int accountId)
+    {
+        System.Diagnostics.Debug.WriteLine("Clic");
+        string res = await Queries.DeleteAccount(accountId);
+        if (res != null)
+        {
+            BankAccounts.Remove(BankAccounts.FirstOrDefault(item => item.BankAccountId == accountId));
+        }
+    }
     // Handling color to do
 
 }

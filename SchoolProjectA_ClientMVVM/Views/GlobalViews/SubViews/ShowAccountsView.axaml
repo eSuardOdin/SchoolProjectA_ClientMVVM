@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 
+			 xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="SchoolProjectA_ClientMVVM.Views.ShowAccountsView"
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:ShowAccountsViewModel">
@@ -27,7 +28,12 @@
 							<Panel HorizontalAlignment="Right"
 								   Grid.Column="3">	
 								<Button Background="Red"
-										Tag="{Binding BankAccountId}">
+										Tag="{Binding BankAccountId}"
+										x:CompileBindings="False"
+										Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AccountsContentViewModel.DeleteBankAccountCommand}">
+									<Button.CommandParameter>
+										<Binding Path="BankAccountId" />
+									</Button.CommandParameter>
 									Supprimer
 								</Button>
 							</Panel>

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Security.Principal;
 namespace SchoolProjectA_ClientMVVM.Models
 {
     public static class Queries
@@ -110,6 +111,8 @@ namespace SchoolProjectA_ClientMVVM.Models
         }
 
 
+        
+
         /*
          * 
          * BANK ACCOUNTS
@@ -144,6 +147,11 @@ namespace SchoolProjectA_ClientMVVM.Models
         }
 
 
+        /// <summary>
+        /// Post a bank account in order to get the api to insert it in DB
+        /// </summary>
+        /// <param name="account">The account to insert</param>
+        /// <returns>Account inserted or null if error</returns>
         public static async Task<BankAccount> PostBankAccount(BankAccount account)
         {
             using HttpClient client = new HttpClient();
@@ -157,7 +165,9 @@ namespace SchoolProjectA_ClientMVVM.Models
                 HttpResponseMessage res = await client.PostAsync($"http://raspberry:5000/account", content);
                 if (res.IsSuccessStatusCode)
                 {
-                    return account;
+                    string responseData = await res.Content.ReadAsStringAsync();
+                    BankAccount createdAccount = JsonConvert.DeserializeObject<BankAccount>(responseData);
+                    return createdAccount;
                 }
                 else
                 {
@@ -172,6 +182,41 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
+
+        /// <summary>
+        /// Delete a bank account
+        /// </summary>
+        /// <param name="accountId">The if of account to delete</param>
+        /// <returns>The deleted account</returns>
+        public static async Task<string> DeleteAccount(int accountId)
+        {
+            using HttpClient client = new();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            try
+            {
+                HttpResponseMessage res = await client.DeleteAsync($"http://raspberry:5000/account/{accountId}");
+                if (res.IsSuccessStatusCode)
+                {
+                    //BankAccount deletedAccount = await res.Content.ReadFromJsonAsync<BankAccount>();
+                    var response = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return response;
+                }
+                else
+                {
+                    var errorResponse = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(errorResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
         /*
          * 
          * TRANSACTIONS
