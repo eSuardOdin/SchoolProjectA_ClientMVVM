@@ -12,6 +12,13 @@ namespace SchoolProjectA_ClientMVVM.Models
 {
     public static class Queries
     {
+
+
+        /*
+         * 
+         * MONIS
+         * 
+         */
         /// <summary>
         /// Trie les monis pour voir s'il en existe un avec le login du champ de login
         /// </summary>
@@ -41,10 +48,10 @@ namespace SchoolProjectA_ClientMVVM.Models
         }
 
         /// <summary>
-        /// Check le mot de passe d'un Moni par rapport au champ password
+        /// Check Moni password against password parameter
         /// </summary>
-        /// <param name="moni">Le moni à checker</param>
-        /// <returns>Le moni si password ok</returns>
+        /// <param name="moni">Moni to check</param>
+        /// <returns>The Moni if check ok</returns>
         public static async Task<Moni> CheckMoni(Moni moni, string pwd)
         {
             using HttpClient client = new HttpClient();
@@ -69,10 +76,10 @@ namespace SchoolProjectA_ClientMVVM.Models
         }
 
         /// <summary>
-        /// Post d'un moni
+        /// Moni POST
         /// </summary>
-        /// <param name="moni">Moni à post vers l'API</param>
-        /// <returns>Le moni POST (null si erreur)</returns>
+        /// <param name="moni">Moni to post to API</param>
+        /// <returns>POSTed Moni (null if error)</returns>
         public static async Task<Moni> PostMoni(Moni moni)
         {
             using HttpClient client = new HttpClient();
@@ -102,11 +109,18 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
+
+        /*
+         * 
+         * BANK ACCOUNTS
+         * 
+         */
+
         /// <summary>
-        /// GET tous les comptes en banque d'un Moni
+        /// GET all Moni Accounts
         /// </summary>
-        /// <param name="id">Id du Moni</param>
-        /// <returns></returns>
+        /// <param name="id">Moni Id</param>
+        /// <returns>The accounts or null</returns>
         public static async Task<List<BankAccount>> GetMoniAccounts(int id)
         {
             using HttpClient client = new HttpClient();
@@ -130,6 +144,39 @@ namespace SchoolProjectA_ClientMVVM.Models
         }
 
 
+        public static async Task<BankAccount> PostBankAccount(BankAccount account)
+        {
+            using HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            try
+            {
+                string accountData = JsonConvert.SerializeObject(account);
+                var content = new StringContent(accountData, Encoding.UTF8, "application/json");
+                HttpResponseMessage res = await client.PostAsync($"http://raspberry:5000/account", content);
+                if (res.IsSuccessStatusCode)
+                {
+                    return account;
+                }
+                else
+                {
+                    var errorResponse = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(errorResponse);
+                }
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
+
+        /*
+         * 
+         * TRANSACTIONS
+         * 
+         */
 
         public static async Task<List<Transaction>> GetAccountTransactions(int accountId)
         {

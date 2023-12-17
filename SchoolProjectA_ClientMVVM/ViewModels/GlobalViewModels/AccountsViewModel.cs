@@ -47,7 +47,7 @@ public class AccountsViewModel : ViewModelBase
     /// <summary>
     /// Showing add account form
     /// </summary>
-    public void AddAccount()
+    public async void AddAccount()
     {
         //AccountsContentViewModel = new AddAccountViewModel();
         AddAccountViewModel addAccountVM = new AddAccountViewModel();
@@ -55,10 +55,15 @@ public class AccountsViewModel : ViewModelBase
             addAccountVM.AddCommand,
             addAccountVM.CancelCommand.Select(_ => (BankAccount?)null))
             .Take(1) // Getting only the first click
-            .Subscribe(newBankAccount =>
+            .Subscribe(async newBankAccount =>
             { if (newBankAccount != null)
                 {
-                    AccountsList.BankAccounts.Add(newBankAccount);
+                    newBankAccount.MoniId = MoniId;
+                    newBankAccount = await Queries.PostBankAccount(newBankAccount);
+                    if(newBankAccount != null)
+                    {
+                        AccountsList.BankAccounts.Add(newBankAccount);
+                    }
                 }
                 AccountsContentViewModel = AccountsList;
             });

@@ -9,37 +9,40 @@
 			 x:DataType="vm:ShowAccountsViewModel">
 
 	<StackPanel>
-		<ListBox ItemsSource="{Binding BankAccounts}"
-				 BorderBrush="Black"
-				 BorderThickness="1">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<Grid ColumnDefinitions="*, *, *, *">
-						<TextBlock Grid.Column="0"
-								   Text="{Binding BankAccountLabel}"/>
-						<TextBlock Grid.Column="1"
-								   Text="{Binding BankAccountBalance, StringFormat={}{0}€}"/>
-						<Button Grid.Column="2">
-							Transactions
-						</Button>
-						<Panel HorizontalAlignment="Right"
-							   Grid.Column="3">	
-							<Button Background="Red">
-								Supprimer
+		<ScrollViewer>
+			<ListBox ItemsSource="{Binding BankAccounts}"
+					 MaxHeight="650"
+					 Background="White">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid ColumnDefinitions="*, *, *, *">
+							<TextBlock Grid.Column="0"
+									   Text="{Binding BankAccountLabel}"/>
+							<TextBlock Grid.Column="1"
+									   Text="{Binding BankAccountBalance, StringFormat={}{0}€}"/>
+							<Button Grid.Column="2">
+								Transactions
 							</Button>
-						</Panel>
-					</Grid>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<Button
-			Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
-			x:CompileBindings="False"
-			Name="TestBtn">
-			Ajouter
+							<Panel HorizontalAlignment="Right"
+								   Grid.Column="3">	
+								<Button Background="Red">
+									Supprimer
+								</Button>
+							</Panel>
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</ScrollViewer>
+		<Button HorizontalAlignment="Stretch"
+				HorizontalContentAlignment="Center"
+				Background="Green"
+				Foreground="White"
+				FontWeight="Bold"
+				Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
+				x:CompileBindings="False">
+			Ajouter un compte
 		</Button>
-		<!--="{Binding $parent[vm:AccountsView].AddAccount}">
-		{Binding $parent[4].AddAccountCommand, Mode=OneWay}-->
 	</StackPanel>
 
 	
