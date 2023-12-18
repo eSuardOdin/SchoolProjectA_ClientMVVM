@@ -7,5 +7,9 @@ using System.Threading.Tasks;
 namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class ConnexionViewModel : ViewModelBase
 {
+    public void Click()
+    {
+        System.Diagnostics.Debug.WriteLine("Clic");
+    }
 }
 

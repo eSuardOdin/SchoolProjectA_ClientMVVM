@@ -50,5 +50,11 @@ public class MainWindowViewModel : ViewModelBase
     {
         ContentViewModel = new ConnexionViewModel();
     }
+
+    // Add Moni ViewModel
+    public void CreateMoniForm()
+    {
+        ContentViewModel = new AddMoniViewModel();
+    }
 }
 

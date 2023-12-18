@@ -19,8 +19,17 @@
 				IsEnabled="{Binding $parent[Window].DataContext.IsButtonEnabled}">
 			Connect
 		</Button>
-		<StackPanel>
-			<TextBlock>Connexion View</TextBlock>
+		<StackPanel HorizontalAlignment="Right"
+					Orientation="Horizontal"
+					Spacing="10"
+					Margin="5">
+			<TextBlock Margin="5">Pas de compte ?</TextBlock>
+			<Button FontWeight="Bold"
+					VerticalAlignment="Top"
+					x:CompileBindings="False"
+					Command="{Binding $parent[Window].DataContext.CreateMoniForm}">
+				Créer un compte
+			</Button>
 		</StackPanel>
 	</DockPanel>
 </UserControl>
