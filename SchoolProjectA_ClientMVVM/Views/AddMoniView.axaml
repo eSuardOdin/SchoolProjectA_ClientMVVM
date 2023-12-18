@@ -20,8 +20,16 @@
 						Grid.Column="1"
 						Grid.ColumnSpan="2"
 						HorizontalAlignment="Center">
-				<TextBox HorizontalAlignment="Center" Name="LoginTB" Margin="5,5" Watermark="Login" Height="35" Width="250" MaxLength="32"></TextBox>
-				<TextBlock HorizontalAlignment="Center" Name="LoginErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+				<TextBox HorizontalAlignment="Center"
+						 Margin="5,5"
+						 Watermark="Login"
+						 Height="35"
+						 Width="250"
+						 MaxLength="32"
+						 Text="{Binding Login, Mode=TwoWay}"></TextBox>
+				<TextBlock HorizontalAlignment="Center"
+						   Text="{Binding LoginValidity}"
+						   ></TextBlock>
 			</StackPanel>
 			<StackPanel Grid.Row="2"
 						HorizontalAlignment="Center"
@@ -58,7 +66,8 @@
 						 Watermark="Nom"
 						 Height="35"
 						 Width="250"
-						 MaxLength="32"></TextBox>
+						 MaxLength="32"
+						 Text="{Binding LastName}"></TextBox>
 				<TextBlock HorizontalAlignment="Center" Name="LastNameErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
 			</StackPanel>
 			<StackPanel Grid.Row="5"
@@ -70,7 +79,8 @@
 						 Watermark="Prénom"
 						 Height="35"
 						 Width="250"
-						 MaxLength="32"></TextBox>
+						 MaxLength="32"
+						 Text="{Binding FirstName}"></TextBox>
 				<TextBlock HorizontalAlignment="Center" Name="FirstNameErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
 			</StackPanel>
 			<StackPanel VerticalAlignment="Top"
@@ -78,7 +88,9 @@
 						Grid.Column="1"
 						HorizontalAlignment="Center">
 			
-				<Button Grid.Column="" BorderBrush="Black" Name="CreateUserBtn">Créer</Button>
+				<Button Grid.Column=""
+						BorderBrush="Black"
+						IsEnabled="{Binding CreateEnabled}">Créer</Button>
 			
 			</StackPanel>
 			<StackPanel Grid.Row="6"
