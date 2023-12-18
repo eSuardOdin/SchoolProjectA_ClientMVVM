@@ -54,7 +54,7 @@ public class MainWindowViewModel : ViewModelBase
     // Add Moni ViewModel
     public void CreateMoniForm()
     {
-        ContentViewModel = new AddMoniViewModel();
+        ContentViewModel = new AddMoniViewModel(this);
     }
 }
 
