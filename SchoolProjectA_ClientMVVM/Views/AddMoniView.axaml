@@ -7,5 +7,86 @@
              x:Class="SchoolProjectA_ClientMVVM.Views.AddMoniView"
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:AddMoniViewModel">
-  Welcome to Avalonia!
+	<Panel VerticalAlignment="Center">
+		<Grid RowDefinitions="70,70,45,70,70,70,50"
+			  ColumnDefinitions="*,*,*,*">
+
+			<Panel Grid.Row="0"
+				   Grid.Column="1"
+				   Grid.ColumnSpan="2">
+				<TextBlock Name="QueryStatusLbl" HorizontalAlignment="Center" IsVisible="False"></TextBlock>
+			</Panel>
+			<StackPanel Grid.Row="1"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"
+						HorizontalAlignment="Center">
+				<TextBox HorizontalAlignment="Center" Name="LoginTB" Margin="5,5" Watermark="Login" Height="35" Width="250" MaxLength="32"></TextBox>
+				<TextBlock HorizontalAlignment="Center" Name="LoginErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+			</StackPanel>
+			<StackPanel Grid.Row="2"
+						HorizontalAlignment="Center"
+						Grid.Column="1"
+						Grid.ColumnSpan="2">
+				<TextBox PasswordChar="*"
+						 Name="PwdTB"
+						 HorizontalAlignment="Center" 
+						 Margin="5,5" 
+						 Watermark="Mot de passe" 
+						 Height="35" 
+						 Width="250" 
+						 MaxLength="64"></TextBox>
+			</StackPanel>
+			<StackPanel Grid.Row="3"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"
+						HorizontalAlignment="Center">
+				<TextBox PasswordChar="*" 
+						 HorizontalAlignment="Center"
+						 Name="PwdConfirmationTB" Margin="5,5"
+						 Watermark="Confirmation mot de passe"
+						 Height="35"
+						 Width="250"
+						 MaxLength="64"></TextBox>
+				<TextBlock HorizontalAlignment="Center" Name="PwdErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+			</StackPanel>
+			<StackPanel Grid.Row="4"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"
+						HorizontalAlignment="Center">
+				<TextBox HorizontalAlignment="Center" 
+						 Margin="5,5"
+						 Watermark="Nom"
+						 Height="35"
+						 Width="250"
+						 MaxLength="32"></TextBox>
+				<TextBlock HorizontalAlignment="Center" Name="LastNameErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+			</StackPanel>
+			<StackPanel Grid.Row="5"
+						Grid.Column="1"
+						Grid.ColumnSpan="2"
+						HorizontalAlignment="Center">
+				<TextBox HorizontalAlignment="Center"
+						 Margin="5,5"
+						 Watermark="Prénom"
+						 Height="35"
+						 Width="250"
+						 MaxLength="32"></TextBox>
+				<TextBlock HorizontalAlignment="Center" Name="FirstNameErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+			</StackPanel>
+			<StackPanel VerticalAlignment="Top"
+						Grid.Row="6"
+						Grid.Column="1"
+						HorizontalAlignment="Center">
+			
+				<Button Grid.Column="" BorderBrush="Black" Name="CreateUserBtn">Créer</Button>
+			
+			</StackPanel>
+			<StackPanel Grid.Row="6"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Top"
+				   Grid.Column="2">
+				<Button BorderBrush="Black" Name="CancelUserCreationBtn" HorizontalAlignment="Center" Background="Beige">Retour</Button>
+			</StackPanel>
+		</Grid>
+	</Panel>
 </UserControl>
