@@ -29,6 +29,7 @@
 						 Text="{Binding Login, Mode=TwoWay}"></TextBox>
 				<TextBlock HorizontalAlignment="Center"
 						   Text="{Binding LoginValidity}"
+						   Foreground="{Binding LoginValidityColor}"
 						   ></TextBlock>
 			</StackPanel>
 			<StackPanel Grid.Row="2"
@@ -55,7 +56,7 @@
 						 Height="35"
 						 Width="250"
 						 MaxLength="64"></TextBox>
-				<TextBlock HorizontalAlignment="Center" Name="PwdErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+				<TextBlock HorizontalAlignment="Center" IsVisible="False" Foreground="Red"></TextBlock>
 			</StackPanel>
 			<StackPanel Grid.Row="4"
 						Grid.Column="1"

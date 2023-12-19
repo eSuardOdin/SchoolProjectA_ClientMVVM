@@ -21,10 +21,12 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
 
         private string _password;
         private string _passwordConfirmation;
+        private string _passwordValidity;
         private bool _isPasswordValid;
             
         private string _login;
         private string _loginValidity;
+        private IBrush _loginValidityColor = Brushes.Black;
         private bool _isLoginValid;
 
         private bool _createEnabled;
@@ -40,17 +42,28 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
 
 
         // Getters Setters
+
+        // ------ Firstname ----
         public string FirstName 
         { 
             get => _firstName;
             set => this.RaiseAndSetIfChanged(ref _firstName, value);
         }
+        // -------------------
 
+
+
+        // ---- Lastname -----
         public string LastName
         {
             get => _lastName;
             set => this.RaiseAndSetIfChanged(ref _lastName, value);
         }
+        // -------------------
+
+
+
+        // ------ Password -----
         public string Password
         {
             get => _password;
@@ -61,7 +74,15 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             get => _passwordConfirmation;
             set => this.RaiseAndSetIfChanged(ref _passwordConfirmation, value);
         }
+        public string PasswordValidity
+        {
+            get => _passwordValidity;
+            set => this.RaiseAndSetIfChanged(ref _passwordValidity, value);
+        }
+        // -------------------
 
+
+        // ------  Login  -----
         public string Login
         {
             get => _login;
@@ -74,14 +95,20 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             set => this.RaiseAndSetIfChanged(ref _loginValidity, value);
         }
 
+
+        public IBrush LoginValidityColor
+        {
+            get => _loginValidityColor;
+            set => this.RaiseAndSetIfChanged(ref _loginValidityColor, value);
+        }
+        // -------------------
+
+
+
         public bool CreateEnabled
         {
             get => _createEnabled;
-            set
-            {
-                _createEnabled = (/*_isPasswordValid && */_isLoginValid && _isFirstNameValid && _isLastNameValid);
-                this.RaisePropertyChanged(nameof(CreateEnabled));
-            }
+            set => this.RaiseAndSetIfChanged(ref _createEnabled, value);
         }
         /*
          * 
@@ -98,7 +125,8 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             {
                 LoginValidity = "";
                 _isLoginValid = false;
-                this.RaisePropertyChanged(nameof(CreateEnabled));
+                LoginValidityColor = Brushes.Red;
+                UpdateCreateEnabled();
             }
             else
             {
@@ -107,43 +135,61 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
                 {
                     LoginValidity = $"Le pseudo {Login} est disponible";
                     _isLoginValid = true;
-                    this.RaisePropertyChanged(nameof(CreateEnabled));
+                    LoginValidityColor = Brushes.Green;
+                    UpdateCreateEnabled();
                 }
                 else
                 {
                     LoginValidity = $"Le pseudo {Login} n'est pas disponible";
                     _isLoginValid = false;
-                    this.RaisePropertyChanged(nameof(CreateEnabled));
+                    LoginValidityColor = Brushes.Red;
+                    UpdateCreateEnabled();
                 }
             }
         }
 
+        /// <summary>
+        /// Checks if firstname ok
+        /// </summary>
         private void CheckFirstName()
         {
             if(String.IsNullOrWhiteSpace(FirstName))
             {
                 _isFirstNameValid = false;
-                this.RaisePropertyChanged(nameof(CreateEnabled));
+                UpdateCreateEnabled();
             }
             else
             {
                 _isFirstNameValid = true;
-                this.RaisePropertyChanged(nameof(CreateEnabled));
+                UpdateCreateEnabled();
             }
         }
 
+        /// <summary>
+        /// Checks if lastname ok
+        /// </summary>
         private void CheckLastName()
         {
             if (String.IsNullOrWhiteSpace(LastName))
             {
                 _isLastNameValid = false;
-                this.RaisePropertyChanged(nameof(CreateEnabled));
+                UpdateCreateEnabled();
             }
             else
             {
                 _isLastNameValid = true;
-                this.RaisePropertyChanged(nameof(CreateEnabled));
+                UpdateCreateEnabled();
             }
+        }
+
+
+
+
+
+
+        private void UpdateCreateEnabled()
+        {
+            CreateEnabled = /*_isPasswordValid &&*/ _isLoginValid && _isFirstNameValid && _isLastNameValid;
         }
     }
 
