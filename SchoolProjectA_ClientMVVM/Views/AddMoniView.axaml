@@ -16,6 +16,8 @@
 				   Grid.ColumnSpan="2">
 				<TextBlock Name="QueryStatusLbl" HorizontalAlignment="Center" IsVisible="False"></TextBlock>
 			</Panel>
+			
+			<!-- LOGIN -->
 			<StackPanel Grid.Row="1"
 						Grid.Column="1"
 						Grid.ColumnSpan="2"
@@ -32,18 +34,20 @@
 						   Foreground="{Binding LoginValidityColor}"
 						   ></TextBlock>
 			</StackPanel>
+
+			<!-- PASSWORD -->
 			<StackPanel Grid.Row="2"
 						HorizontalAlignment="Center"
 						Grid.Column="1"
 						Grid.ColumnSpan="2">
 				<TextBox PasswordChar="*"
-						 Name="PwdTB"
 						 HorizontalAlignment="Center" 
 						 Margin="5,5" 
 						 Watermark="Mot de passe" 
 						 Height="35" 
 						 Width="250" 
-						 MaxLength="64"></TextBox>
+						 MaxLength="64"
+						 Text="{Binding Password, Mode=TwoWay}"></TextBox>
 			</StackPanel>
 			<StackPanel Grid.Row="3"
 						Grid.Column="1"
@@ -51,13 +55,19 @@
 						HorizontalAlignment="Center">
 				<TextBox PasswordChar="*" 
 						 HorizontalAlignment="Center"
-						 Name="PwdConfirmationTB" Margin="5,5"
+						 Margin="5,5"
 						 Watermark="Confirmation mot de passe"
 						 Height="35"
 						 Width="250"
-						 MaxLength="64"></TextBox>
-				<TextBlock HorizontalAlignment="Center" IsVisible="False" Foreground="Red"></TextBlock>
+						 MaxLength="64"
+						 Text="{Binding PasswordConfirmation, Mode=TwoWay}"></TextBox>
+				<TextBlock HorizontalAlignment="Center"
+						   Text="{Binding PasswordValidity}"
+						   Foreground="Red"></TextBlock>
 			</StackPanel>
+
+
+			<!-- NAMES -->
 			<StackPanel Grid.Row="4"
 						Grid.Column="1"
 						Grid.ColumnSpan="2"
@@ -69,7 +79,9 @@
 						 Width="250"
 						 MaxLength="32"
 						 Text="{Binding LastName}"></TextBox>
-				<TextBlock HorizontalAlignment="Center" Name="LastNameErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+				<TextBlock HorizontalAlignment="Center"
+						   Foreground="Red"
+						   Text="{Binding LastNameValidity}"></TextBlock>
 			</StackPanel>
 			<StackPanel Grid.Row="5"
 						Grid.Column="1"
@@ -82,8 +94,14 @@
 						 Width="250"
 						 MaxLength="32"
 						 Text="{Binding FirstName}"></TextBox>
-				<TextBlock HorizontalAlignment="Center" Name="FirstNameErrorLbl" IsVisible="False" Foreground="Red"></TextBlock>
+				<TextBlock HorizontalAlignment="Center"
+						   Foreground="Red"
+						   Text="{Binding FirstNameValidity}"></TextBlock>
 			</StackPanel>
+
+
+
+			<!-- BUTTONS -->
 			<StackPanel VerticalAlignment="Top"
 						Grid.Row="6"
 						Grid.Column="1"

@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 
 
 using SchoolProjectA_ClientMVVM.Models;
+using System.Text.RegularExpressions;
 namespace SchoolProjectA_ClientMVVM.ViewModels
 {
     public class AddMoniViewModel : ViewModelBase
     {
         private string _firstName;
+        private string _firstNameValidity;
         private bool _isFirstNameValid;
 
         private string _lastName;
+        private string _lastNameValidity;
         private bool _isLastNameValid;
 
         private string _password;
@@ -38,6 +41,8 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             this.WhenAnyValue(x => x.Login).Subscribe(_ => CheckLogin());
             this.WhenAnyValue(x => x.FirstName).Subscribe(_ => CheckFirstName());
             this.WhenAnyValue(x => x.LastName).Subscribe(_ => CheckLastName());
+            this.WhenAnyValue(x => x.Password).Subscribe(_ => CheckPassword());
+            this.WhenAnyValue(x => x.PasswordConfirmation).Subscribe(_ => CheckPassword());
         }
 
 
@@ -49,6 +54,12 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             get => _firstName;
             set => this.RaiseAndSetIfChanged(ref _firstName, value);
         }
+
+        public string FirstNameValidity
+        {
+            get => _firstNameValidity;
+            set => this.RaiseAndSetIfChanged(ref _firstNameValidity, value);
+        }
         // -------------------
 
 
@@ -58,6 +69,12 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         {
             get => _lastName;
             set => this.RaiseAndSetIfChanged(ref _lastName, value);
+        }
+
+        public string LastNameValidity
+        {
+            get => _lastNameValidity;
+            set => this.RaiseAndSetIfChanged(ref _lastNameValidity, value);
         }
         // -------------------
 
@@ -78,6 +95,12 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         {
             get => _passwordValidity;
             set => this.RaiseAndSetIfChanged(ref _passwordValidity, value);
+        }
+
+        public bool IsPasswordValid
+        {
+            get => _isPasswordValid;
+            set => this.RaiseAndSetIfChanged(ref _isPasswordValid, value);
         }
         // -------------------
 
@@ -126,7 +149,6 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
                 LoginValidity = "";
                 _isLoginValid = false;
                 LoginValidityColor = Brushes.Red;
-                UpdateCreateEnabled();
             }
             else
             {
@@ -136,16 +158,15 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
                     LoginValidity = $"Le pseudo {Login} est disponible";
                     _isLoginValid = true;
                     LoginValidityColor = Brushes.Green;
-                    UpdateCreateEnabled();
                 }
                 else
                 {
                     LoginValidity = $"Le pseudo {Login} n'est pas disponible";
                     _isLoginValid = false;
                     LoginValidityColor = Brushes.Red;
-                    UpdateCreateEnabled();
                 }
             }
+            UpdateCreateEnabled();
         }
 
         /// <summary>
@@ -156,13 +177,22 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             if(String.IsNullOrWhiteSpace(FirstName))
             {
                 _isFirstNameValid = false;
-                UpdateCreateEnabled();
+                FirstNameValidity = "Le champ prénom doit être rempli";
             }
             else
             {
-                _isFirstNameValid = true;
-                UpdateCreateEnabled();
+                if (Regex.IsMatch(FirstName, @"^[a-zA-Z]+$"))
+                {
+                    _isFirstNameValid = true;
+                    FirstNameValidity = "";
+                }
+                else
+                {
+                    _isFirstNameValid = false;
+                    FirstNameValidity = "Le prénom ne doit contenir que des lettres";
+                }
             }
+            UpdateCreateEnabled();
         }
 
         /// <summary>
@@ -173,64 +203,53 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             if (String.IsNullOrWhiteSpace(LastName))
             {
                 _isLastNameValid = false;
-                UpdateCreateEnabled();
+                LastNameValidity = "Le champ nom doit être rempli";
             }
             else
             {
-                _isLastNameValid = true;
-                UpdateCreateEnabled();
+                if (Regex.IsMatch(LastName, @"^[a-zA-Z]+$"))
+                {
+                    _isLastNameValid = true;
+                    LastNameValidity = "";
+                }
+                else
+                {
+                    _isLastNameValid = false;
+                    LastNameValidity = "Le nom ne doit contenir que des lettres";
+                }
             }
+            UpdateCreateEnabled();
         }
 
 
-
+        private void CheckPassword()
+        {
+            if(String.IsNullOrWhiteSpace(_password) || String.IsNullOrEmpty(_passwordConfirmation))
+            {
+                IsPasswordValid = false;
+                PasswordValidity = "Les champs de mot de passe doivent être remplis";
+            }
+            else if(_password != _passwordConfirmation)
+            {
+                IsPasswordValid = false;
+                PasswordValidity = "Les champs de mot de passe doivent correspondre";
+            }
+            else
+            {
+                IsPasswordValid = true;
+                PasswordValidity = "";
+            }
+            UpdateCreateEnabled();
+        }
 
 
 
         private void UpdateCreateEnabled()
         {
-            CreateEnabled = /*_isPasswordValid &&*/ _isLoginValid && _isFirstNameValid && _isLastNameValid;
+            CreateEnabled = _isPasswordValid && _isLoginValid && _isFirstNameValid && _isLastNameValid;
         }
     }
 
 
 }
 
-
-/*
- * 
- * 
- *  public bool IsFirstNameValid
-    {
-        get => _isFirstNameValid;
-        set
-        {
-            _isFirstNameValid = value;
-            UpdateCreateEnabled();
-        }
-    }
-
-    public bool IsLastNameValid
-    {
-        get => _isLastNameValid;
-        set
-        {
-            _isLastNameValid = value;
-            UpdateCreateEnabled();
-        }
-    }
-
-    public bool CreateEnabled
-    {
-        get => _createEnabled;
-        set => this.RaiseAndSetIfChanged(ref _createEnabled, value);
-    }
-
-    private void UpdateCreateEnabled()
-    {
-        CreateEnabled = IsLoginValid && IsFirstNameValid && IsLastNameValid;
-    }
- * 
- * 
- * 
- */
