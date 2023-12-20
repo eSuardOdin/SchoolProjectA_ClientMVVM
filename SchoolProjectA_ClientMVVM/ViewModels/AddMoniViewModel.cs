@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 
 using SchoolProjectA_ClientMVVM.Models;
 using System.Text.RegularExpressions;
+using System.Reactive;
+using System.Diagnostics;
 namespace SchoolProjectA_ClientMVVM.ViewModels
 {
     public class AddMoniViewModel : ViewModelBase
     {
+        // ----- Views -----
         private string _firstName;
         private string _firstNameValidity;
         private bool _isFirstNameValid;
@@ -33,8 +36,17 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         private bool _isLoginValid;
 
         private bool _createEnabled;
+        // -----------------
+
+
+        // ----- Commands -----
+        //public ReactiveCommand<Unit, Moni> AddCommand { get; }
+        //public ReactiveCommand<Unit, Unit> CancelCommand { get; }
+        // -------------------
 
         public ViewModelBase ParentForm { get; set; }
+
+
         public AddMoniViewModel(ViewModelBase parentForm)
         {
             ParentForm = parentForm;
@@ -46,7 +58,11 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         }
 
 
-        // Getters Setters
+        /*
+         * O-----------------O
+         * | Getters Setters |
+         * O-----------------O
+         */
 
         // ------ Firstname ----
         public string FirstName 
@@ -134,8 +150,9 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             set => this.RaiseAndSetIfChanged(ref _createEnabled, value);
         }
         /*
-         * 
-         * COMMANDS
+         * O----------O
+         * | Commands |
+         * O----------O
          * 
          */
         /// <summary>
@@ -221,7 +238,9 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             UpdateCreateEnabled();
         }
 
-
+        /// <summary>
+        /// Checks password + password confirmation validity
+        /// </summary>
         private void CheckPassword()
         {
             if(String.IsNullOrWhiteSpace(_password) || String.IsNullOrEmpty(_passwordConfirmation))
@@ -243,10 +262,42 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         }
 
 
-
+        /// <summary>
+        /// Updates the validation button enabled status
+        /// </summary>
         private void UpdateCreateEnabled()
         {
             CreateEnabled = _isPasswordValid && _isLoginValid && _isFirstNameValid && _isLastNameValid;
+        }
+
+
+        public async Task AddMoni()
+        {
+            CreateEnabled = false;
+            Moni moni = new Moni
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                MoniPwd = Password,
+                MoniLogin = Login
+            };
+
+            Moni postedMoni = await Queries.PostMoni(moni);
+
+            if (postedMoni != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"{postedMoni.MoniLogin} ajouté avec id {postedMoni.MoniId}");
+                Login = "";
+                Password = "";
+                PasswordConfirmation = "";
+                LastName = "";
+                FirstName = "";
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Erreur d'insertion dans la base");
+
+            }
         }
     }
 

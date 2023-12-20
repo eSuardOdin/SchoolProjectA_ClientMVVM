@@ -109,7 +109,8 @@
 			
 				<Button Grid.Column=""
 						BorderBrush="Black"
-						IsEnabled="{Binding CreateEnabled}">Créer</Button>
+						IsEnabled="{Binding CreateEnabled}"
+						Command="{Binding AddMoni}">Créer</Button>
 			
 			</StackPanel>
 			<StackPanel Grid.Row="6"
