@@ -1,5 +1,7 @@
 ﻿using ReactiveUI;
 using SchoolProjectA_ClientMVVM.Models;
+using Avalonia.Media;
+using System.Drawing;
 using System.Windows.Input;
 
 namespace SchoolProjectA_ClientMVVM.ViewModels;
@@ -46,9 +48,9 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     // Connexion ViewModel
-    public void Disconnect()
+    public void Disconnect(SolidColorBrush color, string status = "")
     {
-        ContentViewModel = new ConnexionViewModel();
+        ContentViewModel = new ConnexionViewModel(color, status);
     }
 
     // Add Moni ViewModel

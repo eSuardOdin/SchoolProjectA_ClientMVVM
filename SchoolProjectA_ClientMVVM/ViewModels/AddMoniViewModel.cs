@@ -44,10 +44,10 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         //public ReactiveCommand<Unit, Unit> CancelCommand { get; }
         // -------------------
 
-        public ViewModelBase ParentForm { get; set; }
+        public MainWindowViewModel ParentForm { get; set; }
 
 
-        public AddMoniViewModel(ViewModelBase parentForm)
+        public AddMoniViewModel(MainWindowViewModel parentForm)
         {
             ParentForm = parentForm;
             this.WhenAnyValue(x => x.Login).Subscribe(_ => CheckLogin());
@@ -292,11 +292,15 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
                 PasswordConfirmation = "";
                 LastName = "";
                 FirstName = "";
+                SolidColorBrush color = new(0xFF00FF00);
+
+                ParentForm.Disconnect(color, $"Le moni {postedMoni.MoniLogin} a été créé avec succès");
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Erreur d'insertion dans la base");
-
+                SolidColorBrush color = new(0xFFFF0000);
+                ParentForm.Disconnect(color, $"Le moni {postedMoni.MoniLogin} n'a pas pu être inséré dans la base");
             }
         }
     }

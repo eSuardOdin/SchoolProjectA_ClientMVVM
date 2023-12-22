@@ -31,5 +31,10 @@
 				Créer un compte
 			</Button>
 		</StackPanel>
+
+		<StackPanel>
+			<TextBlock Foreground="{Binding StatusColor}"
+					   Text="{Binding MoniCreatedStatus}"/>
+		</StackPanel>
 	</DockPanel>
 </UserControl>
