@@ -10,19 +10,14 @@
              x:Class="SchoolProjectA_ClientMVVM.Views.ConnexionView"
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:ConnexionViewModel">
-	<DockPanel>
-		<Button DockPanel.Dock="Bottom"
-				HorizontalAlignment="Stretch"
-				HorizontalContentAlignment="Center"
-				x:CompileBindings="False"
-				Command="{Binding $parent[Window].DataContext.Connect}"
-				IsEnabled="{Binding $parent[Window].DataContext.IsButtonEnabled}">
-			Connect
-		</Button>
+	
+	<Grid RowDefinitions="*,*,*,*"
+		  ColumnDefinitions="*,*,*">
 		<StackPanel HorizontalAlignment="Right"
 					Orientation="Horizontal"
 					Spacing="10"
-					Margin="5">
+					Grid.Column="2"
+					Grid.Row="0">
 			<TextBlock Margin="5">Pas de compte ?</TextBlock>
 			<Button FontWeight="Bold"
 					VerticalAlignment="Top"
@@ -32,9 +27,33 @@
 			</Button>
 		</StackPanel>
 
-		<StackPanel>
+		<StackPanel VerticalAlignment="Center"
+					HorizontalAlignment="Stretch"
+					Spacing="10"
+					Grid.Row="1"
+					Grid.Column="1">
 			<TextBlock Foreground="{Binding StatusColor}"
 					   Text="{Binding MoniCreatedStatus}"/>
+			<!--Text="{Binding MoniCreatedStatus}"-->
+			<TextBox Watermark="Login"/>
+			<TextBox Watermark="Mot de passe"/>
 		</StackPanel>
-	</DockPanel>
+		<Button DockPanel.Dock="Bottom"
+			HorizontalAlignment="Stretch"
+			HorizontalContentAlignment="Center"
+			x:CompileBindings="False"
+			Command="{Binding $parent[Window].DataContext.Connect}"
+			IsEnabled="{Binding $parent[Window].DataContext.IsButtonEnabled}"
+			Grid.Column="1"
+			Grid.Row="2"
+			>
+			Connect
+		</Button>
+		<TextBlock Text="{Binding $parent[Window].DataContext.ConnexionError}"
+					x:CompileBindings="False"
+					Grid.Row="3"
+					Grid.Column="1"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"/>
+	</Grid>
 </UserControl>

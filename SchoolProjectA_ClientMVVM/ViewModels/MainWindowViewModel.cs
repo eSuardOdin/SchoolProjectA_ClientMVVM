@@ -12,11 +12,13 @@ public class MainWindowViewModel : ViewModelBase
     ViewModelBase _contentViewModel;
     // Enable status of the connection button
     private bool _isButtonEnabled;
-    
+    // The connexion request result
+    private string _connexionError;
 
     public MainWindowViewModel()
     {
         _contentViewModel = new ConnexionViewModel();
+        ConnexionError = "";
         IsButtonEnabled = true;
     }
 
@@ -32,6 +34,13 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _isButtonEnabled;
         set => this.RaiseAndSetIfChanged(ref this._isButtonEnabled, value);
+    }
+
+    // Get connexion error
+    public string ConnexionError
+    {
+        get => _connexionError;
+        set => this.RaiseAndSetIfChanged(ref this._connexionError, value);
     }
 
     // Global ViewModel
