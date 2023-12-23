@@ -296,13 +296,13 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
                 FirstName = "";
                 SolidColorBrush color = new(0xFF11FF11);
 
-                ParentForm.Disconnect(color, $"Le moni {postedMoni.MoniLogin} a été créé avec succès");
+                ParentForm.StopCreation(color, $"Le moni {postedMoni.MoniLogin} a été créé avec succès");
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Erreur d'insertion dans la base");
                 SolidColorBrush color = new(0xFFFF0000);
-                ParentForm.Disconnect(color, $"Le moni {postedMoni.MoniLogin} n'a pas pu être inséré dans la base");
+                ParentForm.StopCreation(color, $"Le moni {postedMoni.MoniLogin} n'a pas pu être inséré dans la base");
             }
         }
     }

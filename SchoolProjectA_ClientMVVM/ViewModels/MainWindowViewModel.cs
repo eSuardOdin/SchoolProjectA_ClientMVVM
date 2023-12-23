@@ -69,7 +69,6 @@ public class MainWindowViewModel : ViewModelBase
         }
         else
         {
-            // Fake connection
             Moni moni = await Queries.GetMoni(Login);
             if (moni != null) 
             {
@@ -77,6 +76,8 @@ public class MainWindowViewModel : ViewModelBase
                 if (checkedMoni != null)
                 {
                     ContentViewModel = new GlobalViewModel(checkedMoni);
+                    Password = "";
+                    Login = "";
                 }
                 else
                 {
@@ -92,7 +93,12 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     // Connexion ViewModel
-    public void Disconnect(SolidColorBrush color, string status = "")
+    public void Disconnect()
+    {
+        ContentViewModel = new ConnexionViewModel();
+    }
+
+    public void StopCreation(SolidColorBrush? color, string status = "")
     {
         ContentViewModel = new ConnexionViewModel(color, status);
     }
