@@ -283,6 +283,8 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             };
 
             Moni postedMoni = await Queries.PostMoni(moni);
+            // Getting the ID
+            postedMoni = await Queries.GetMoni(postedMoni.MoniLogin);
 
             if (postedMoni != null)
             {
@@ -292,7 +294,7 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
                 PasswordConfirmation = "";
                 LastName = "";
                 FirstName = "";
-                SolidColorBrush color = new(0xFF00FF00);
+                SolidColorBrush color = new(0xFF11FF11);
 
                 ParentForm.Disconnect(color, $"Le moni {postedMoni.MoniLogin} a été créé avec succès");
             }
