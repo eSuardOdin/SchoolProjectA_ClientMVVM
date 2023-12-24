@@ -33,7 +33,6 @@ public class ShowAccountsViewModel : ViewModelBase
     private async Task<List<BankAccount>> LoadBankAccounts(int moniId)
     {
         List<BankAccount> bankAccounts = await Queries.GetMoniAccounts(moniId);
-        foreach(BankAccount bankAccount in bankAccounts) { System.Diagnostics.Debug.WriteLine(bankAccount.BankAccountLabel); }
         return bankAccounts;
     }
     // Casting list to ObservableCollection

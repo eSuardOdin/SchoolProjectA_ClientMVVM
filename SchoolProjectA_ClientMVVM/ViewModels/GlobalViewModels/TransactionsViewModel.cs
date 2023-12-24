@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Microsoft.CodeAnalysis;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,10 @@ public class TransactionsViewModel : ViewModelBase
     {
         get => _transactionsContentViewModel;
         set => this.RaiseAndSetIfChanged(ref _transactionsContentViewModel, value);
+    }
+
+    public async void AddTransaction()
+    {
+        System.Diagnostics.Debug.WriteLine("Ajout de transaction");
     }
 }
