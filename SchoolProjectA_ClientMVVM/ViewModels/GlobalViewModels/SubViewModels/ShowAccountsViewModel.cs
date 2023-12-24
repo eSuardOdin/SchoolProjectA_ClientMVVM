@@ -45,7 +45,6 @@ public class ShowAccountsViewModel : ViewModelBase
 
     private async void DeleteAccount(int accountId)
     {
-        System.Diagnostics.Debug.WriteLine("Clic");
         string res = await Queries.DeleteAccount(accountId);
         if (res != null)
         {
