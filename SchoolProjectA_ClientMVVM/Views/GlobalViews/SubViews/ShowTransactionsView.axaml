@@ -35,7 +35,12 @@
 							<Panel HorizontalAlignment="Right"
 								   Grid.Column="3">
 								<Button Background="Red"
-										Tag="{Binding TransactionId}">
+										Tag="{Binding TransactionId}"
+										x:CompileBindings="False"
+										Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.TransactionsContentViewModel.DeleteTransactionCommand}">
+									<Button.CommandParameter>
+										<Binding Path="TransactionId" />
+									</Button.CommandParameter>
 									Supprimer
 								</Button>
 							</Panel>

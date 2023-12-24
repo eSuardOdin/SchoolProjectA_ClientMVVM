@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reactive;
+
 
 namespace SchoolProjectA_ClientMVVM.ViewModels;
 
@@ -13,10 +15,12 @@ public class ShowTransactionsViewModel : ViewModelBase
 {
     private ObservableCollection<Transaction> _transactions;
     private int MyMoniId { get; set; }
+    public ReactiveCommand<int, Unit> DeleteTransactionCommand { get; }
     public ShowTransactionsViewModel(int moniId) 
     {
         MyMoniId = moniId;
         InitializeAsync();
+        DeleteTransactionCommand = ReactiveCommand.Create<int>(DeleteTransaction);
     }
     public ObservableCollection<Transaction> Transactions
     {
@@ -45,5 +49,11 @@ public class ShowTransactionsViewModel : ViewModelBase
     {
         List<Transaction> transac = await LoadTransactions();
         Transactions = new ObservableCollection<Transaction>(transac);
+    }
+
+    private async void DeleteTransaction(int transacId)
+    {
+        //string res = await Queries.DeleteTran
+        System.Diagnostics.Debug.WriteLine($"Clicked on {transacId}");
     }
 }
