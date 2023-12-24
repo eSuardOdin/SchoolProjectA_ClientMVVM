@@ -10,6 +10,15 @@
 			 x:DataType="vm:ShowAccountsViewModel">
 
 	<StackPanel>
+		<Button HorizontalAlignment="Stretch"
+				HorizontalContentAlignment="Center"
+				Background="Green"
+				Foreground="White"
+				FontWeight="Bold"
+				Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
+				x:CompileBindings="False">
+			Ajouter un compte
+		</Button>
 		<ScrollViewer>
 			<ListBox ItemsSource="{Binding BankAccounts}"
 					 MaxHeight="650"
@@ -41,16 +50,7 @@
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-		</ScrollViewer>
-		<Button HorizontalAlignment="Stretch"
-				HorizontalContentAlignment="Center"
-				Background="Green"
-				Foreground="White"
-				FontWeight="Bold"
-				Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
-				x:CompileBindings="False">
-			Ajouter un compte
-		</Button>
+		</ScrollViewer>	
 	</StackPanel>
 
 	
