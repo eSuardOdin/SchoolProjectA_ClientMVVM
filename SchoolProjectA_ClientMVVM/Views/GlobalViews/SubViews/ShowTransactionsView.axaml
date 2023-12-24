@@ -20,8 +20,8 @@
 		</Button>
 		<ScrollViewer>
 			<ListBox ItemsSource="{Binding Transactions}"
-					 BorderBrush="Black"
-					 BorderThickness="1">
+					 MaxHeight="650"
+					 Background="White">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<Grid ColumnDefinitions="*, *, *, *">
