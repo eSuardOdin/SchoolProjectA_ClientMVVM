@@ -259,7 +259,7 @@ namespace SchoolProjectA_ClientMVVM.Models
 
             try
             {
-                HttpResponseMessage res = await client.DeleteAsync($"http://raspberry:5000/transaction/{transacId}");
+                HttpResponseMessage res = await client.DeleteAsync($"http://raspberry:5000/transaction/DeleteTransaction?transactionId={transacId}");
                 if (res.IsSuccessStatusCode)
                 {
                     var response = await res.Content.ReadAsStringAsync();
