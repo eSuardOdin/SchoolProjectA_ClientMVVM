@@ -245,5 +245,39 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
+        /// <summary>
+        /// Delete transaction from database
+        /// </summary>
+        /// <param name="transacId">Id of the transaction</param>
+        /// <returns>The response or null if failed</returns>
+        public static async Task<string> DeleteTransaction(int transacId)
+        {
+            using HttpClient client = new();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            try
+            {
+                HttpResponseMessage res = await client.DeleteAsync($"http://raspberry:5000/transaction/{transacId}");
+                if (res.IsSuccessStatusCode)
+                {
+                    var response = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return response;
+                }
+                else
+                {
+                    var errorResponse = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(errorResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
+
     }
 }

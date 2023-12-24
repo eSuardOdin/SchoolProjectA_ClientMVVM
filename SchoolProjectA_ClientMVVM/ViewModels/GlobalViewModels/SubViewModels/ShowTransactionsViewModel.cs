@@ -51,9 +51,16 @@ public class ShowTransactionsViewModel : ViewModelBase
         Transactions = new ObservableCollection<Transaction>(transac);
     }
 
+    /// <summary>
+    /// Delete the transaction from DB, if succes, deletes it from list too
+    /// </summary>
+    /// <param name="transacId">Id of the transaction</param>
     private async void DeleteTransaction(int transacId)
     {
-        //string res = await Queries.DeleteTran
-        System.Diagnostics.Debug.WriteLine($"Clicked on {transacId}");
+        string res = await Queries.DeleteTransaction(transacId);
+        if(res != null)
+        {
+            Transactions.Remove(Transactions.FirstOrDefault(x => x.TransactionId == transacId));
+        }
     }
 }
