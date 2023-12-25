@@ -271,6 +271,10 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
         }
 
 
+        /// <summary>
+        /// Adding moni to the db
+        /// </summary>
+        /// <returns></returns>
         public async Task AddMoni()
         {
             CreateEnabled = false;

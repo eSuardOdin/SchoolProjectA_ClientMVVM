@@ -17,8 +17,9 @@
 					Spacing="25"
 					>
 			<TextBox Width="250"
-						Watermark="Nom du compte"
-						Text="{Binding BankAccountLabel}" />
+					 Watermark="Nom du compte"
+					 Text="{Binding BankAccountLabel}"
+					 MaxLength="128"/>
 			<NumericUpDown Value="{Binding BankAccountBalance}"
 							Increment="1"
 							FormatString="0.00" />

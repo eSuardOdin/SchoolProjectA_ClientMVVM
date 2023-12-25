@@ -11,9 +11,11 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class TransactionsViewModel : ViewModelBase
 {
     private ViewModelBase _transactionsContentViewModel;
+    public int MoniId { get; set; }
     public TransactionsViewModel(int moniId) 
     {
-        TransactionsContentViewModel = new ShowTransactionsViewModel(moniId);
+        MoniId = moniId;
+        TransactionsContentViewModel = new ShowTransactionsViewModel(MoniId);
     }
 
     public ViewModelBase TransactionsContentViewModel
@@ -24,6 +26,6 @@ public class TransactionsViewModel : ViewModelBase
 
     public async void AddTransaction()
     {
-        System.Diagnostics.Debug.WriteLine("Ajout de transaction");
+        TransactionsContentViewModel = new AddTransactionViewModel(MoniId);
     }
 }

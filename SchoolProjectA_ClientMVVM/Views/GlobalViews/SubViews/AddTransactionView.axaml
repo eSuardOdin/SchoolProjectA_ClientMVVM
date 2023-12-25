@@ -5,6 +5,34 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 
              xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
-			 x:Class="SchoolProjectA_ClientMVVM.Views.AddTransactionView">
-  Welcome to Avalonia!
+			 x:Class="SchoolProjectA_ClientMVVM.Views.AddTransactionView"
+			 x:DataType="vm:AddTransactionViewModel">
+	<Grid ShowGridLines="True"
+		  RowDefinitions="Auto,Auto,*"
+		  ColumnDefinitions="*,*">
+		<TextBox Grid.Row="0"
+				 Grid.Column="0"
+				 Margin="15"
+				 MaxLength="128"
+				 Watermark="Libellé"/>
+		<TextBox Grid.Row="1"
+				 Height="250"
+				 Margin="15"
+				 Watermark="Description"/>
+		<StackPanel Grid.Row="2"
+					Grid.Column="0"
+					Margin="15"
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					>
+			<TextBlock Text="Compte : "/>
+			<ComboBox ItemsSource="{Binding BankAccounts}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Path=BankAccountLabel}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</StackPanel>
+	</Grid>
 </UserControl>

@@ -18,7 +18,7 @@ public class AddAccountViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 
     /// <summary>
-    /// Construcor, checking if bank account label is not null and allowing click if ok
+    /// Constructor, checking if bank account label is not null and allowing click if ok
     /// </summary>
     public AddAccountViewModel()
     {
