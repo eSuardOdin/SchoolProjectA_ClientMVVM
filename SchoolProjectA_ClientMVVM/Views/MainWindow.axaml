@@ -8,6 +8,7 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="SchoolProjectA_ClientMVVM"
-		Content="{Binding ContentViewModel}">
+		Content="{Binding ContentViewModel}"
+		CanResize="False">
 
 </Window>

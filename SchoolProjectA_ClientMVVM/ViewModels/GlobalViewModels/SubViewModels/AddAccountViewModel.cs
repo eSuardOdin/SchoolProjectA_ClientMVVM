@@ -11,8 +11,8 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 
 public class AddAccountViewModel : ViewModelBase
 {
-    public string _bankAccountLabel = string.Empty;
-    public decimal _bankAccountBalance = 0;
+    private string _bankAccountLabel = string.Empty;
+    private decimal _bankAccountBalance = 0;
 
     public ReactiveCommand<Unit, BankAccount> AddCommand { get; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }

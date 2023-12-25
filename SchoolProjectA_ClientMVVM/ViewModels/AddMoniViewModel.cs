@@ -283,11 +283,11 @@ namespace SchoolProjectA_ClientMVVM.ViewModels
             };
 
             Moni postedMoni = await Queries.PostMoni(moni);
-            // Getting the ID
-            postedMoni = await Queries.GetMoni(postedMoni.MoniLogin);
 
             if (postedMoni != null)
             {
+                // Getting the ID
+                postedMoni = await Queries.GetMoni(postedMoni.MoniLogin);
                 System.Diagnostics.Debug.WriteLine($"{postedMoni.MoniLogin} ajouté avec id {postedMoni.MoniId}");
                 Login = "";
                 Password = "";
