@@ -16,9 +16,10 @@ public class AddTransactionViewModel : ViewModelBase
     private string _transactionLabel;
     private string? _transactionDescription;
     private decimal _transactionAmount;
-    private DateTime _transactionDate;
+    private DateTimeOffset? _transactionDate = DateTime.Today;
     //private int _bankAccountId;
-    private int[] _tags;
+    private ObservableCollection<Tag>? _tags;
+    private ObservableCollection<Tag>? _selectedTags = new();
     private ObservableCollection<BankAccount>? _bankAccounts;
 
     public string TransactionLabel
@@ -39,38 +40,62 @@ public class AddTransactionViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _transactionAmount, value);
     }
 
-    public DateTime TransactionDate
+    public DateTimeOffset? TransactionDate
     {
-        get => _transactionDate; 
+        get => _transactionDate;
         set => this.RaiseAndSetIfChanged(ref _transactionDate, value);
     }
 
-    public int[] Tags
+    public ObservableCollection<Tag>? Tags
     {
         get => _tags;
         set => this.RaiseAndSetIfChanged(ref _tags, value);
     }
 
+    public ObservableCollection<Tag>? SelectedTags
+    {
+        get => _selectedTags;
+        set => this.RaiseAndSetIfChanged(ref _selectedTags, value);
+    }
+
     public ObservableCollection<BankAccount> BankAccounts
     {
-        get => _bankAccounts; 
+        get => _bankAccounts;
         set => this.RaiseAndSetIfChanged(ref _bankAccounts, value);
     }
 
-    // Load accounts
+    /// <summary>
+    /// Load accounts
+    /// </summary>
+    /// <param name="moniId"></param>
+    /// <returns></returns>
     private async Task<List<BankAccount>> LoadBankAccounts(int moniId)
     {
         List<BankAccount> bankAccounts = await Queries.GetMoniAccounts(moniId);
         return bankAccounts;
     }
-    // Casting list to ObservableCollection
-    private async void InitializeAsync(int moniId)
+    private async Task<List<Tag>> LoadTags(int moniId)
     {
-        List<BankAccount> accounts = await LoadBankAccounts(moniId);
-        BankAccounts = new ObservableCollection<BankAccount>(accounts);
+        List<Tag> bankAccounts = await Queries.GetMoniTags(moniId);
+        return bankAccounts;
     }
 
-    public int MoniId {  get; set; }
+    /// <summary>
+    /// Casting list to ObservableCollection
+    /// </summary>
+    /// <param name="moniId"></param>
+    private async void InitializeAsync(int moniId)
+    {
+        // Casting accounts
+        List<BankAccount> accounts = await LoadBankAccounts(moniId);
+        BankAccounts = new ObservableCollection<BankAccount>(accounts);
+
+        // Casting tags
+        List<Tag> tags = await LoadTags(moniId);
+        Tags = new ObservableCollection<Tag>(tags);
+    }
+
+    public int MoniId { get; set; }
 
     public ReactiveCommand<Unit, Transaction> AddTransactionCommand { get; set; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; set; }
@@ -81,5 +106,13 @@ public class AddTransactionViewModel : ViewModelBase
         InitializeAsync(MoniId);
     }
 
+
+    public void Test()
+    {
+        foreach(var tag in SelectedTags)
+        {
+            System.Diagnostics.Debug.WriteLine(tag.TagLabel);
+        }
+    }
 
 }

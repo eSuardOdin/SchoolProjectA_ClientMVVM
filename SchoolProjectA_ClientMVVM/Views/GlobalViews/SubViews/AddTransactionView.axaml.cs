@@ -10,4 +10,5 @@ public partial class AddTransactionView : UserControl
     {
         InitializeComponent();
     }
+
 }

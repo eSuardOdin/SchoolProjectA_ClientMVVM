@@ -28,7 +28,7 @@
 						 Height="35"
 						 Width="250"
 						 MaxLength="32"
-						 Text="{Binding Login, Mode=TwoWay}"></TextBox>
+						 Text="{Binding Login, Mode=TwoWay}"/>
 				<TextBlock HorizontalAlignment="Center"
 						   Text="{Binding LoginValidity}"
 						   Foreground="{Binding LoginValidityColor}"

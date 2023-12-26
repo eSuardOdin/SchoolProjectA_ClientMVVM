@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 
+			 xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:Class="SchoolProjectA_ClientMVVM.Views.AddTransactionView"
 			 x:DataType="vm:AddTransactionViewModel">
 	<Grid ShowGridLines="True"
-		  RowDefinitions="Auto,Auto,*,Auto"
+		  RowDefinitions="Auto,Auto,Auto,*,Auto"
 		  ColumnDefinitions="*,*">
+		<!--TITLE-->
 		<TextBlock FontWeight="Bold"
 				   Grid.Row="0"
 				   Grid.ColumnSpan="2"
@@ -17,16 +19,22 @@
 				   TextAlignment="Center"
 				   Margin="20"/>
 		
+		<!--LEFT SIDE-->
 		<TextBox Grid.Row="1"
 				 Grid.Column="0"
 				 Margin="15"
 				 MaxLength="128"
-				 Watermark="Libellé"/>
+				 Watermark="Libellé"
+				 Text="{Binding TransactionLabel, Mode=TwoWay}"/>
+		
 		<TextBox Grid.Row="2"
 				 Height="250"
 				 Margin="15"
-				 Watermark="Description"/>
-		<StackPanel Grid.Row="3"
+				 Watermark="Description"
+				 Grid.RowSpan="2"
+				 Text="{Binding TransactionDescription, Mode=TwoWay}"/>
+		
+		<StackPanel Grid.Row="2"
 					Grid.Column="0"
 					Margin="15"
 					Orientation="Horizontal"
@@ -41,6 +49,60 @@
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
+		</StackPanel>
+		
+		<!--RIGHT SIDE-->
+		<StackPanel Grid.Row="1"
+					Grid.Column="1"
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					Margin="15">
+			<TextBlock Text="Montant : "/>
+			<NumericUpDown Value="{Binding TransactionAmount}"
+						   Increment="1"
+						   FormatString="0.00"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="2"
+					Grid.Column="1"
+					Margin="15"
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					>
+			<TextBlock Text="Balises : "/>
+			<ScrollViewer Height="75">
+				<ListBox ItemsSource="{Binding Tags}"
+					     SelectionMode="Multiple, Toggle"
+						 SelectedItems="{Binding SelectedTags, Mode=TwoWay}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Path=TagLabel}"/>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>	
+			</ScrollViewer>
+			
+		</StackPanel>
+
+		<StackPanel Margin="15"
+					Grid.Column="1"
+					Grid.Row="3">
+			<DatePicker DayFormat="ddd dd"
+						SelectedDate="{Binding TransactionDate, Mode=TwoWay}"
+						/>
+		</StackPanel>
+
+		<StackPanel Margin="15"
+					Spacing="10"
+					Grid.Column="1"
+					Grid.Row="4"
+					Orientation="Horizontal">
+			<Button Content="Ajouter"
+					Command="{Binding Test}"
+					Background="Green"/>
+			<Button Content="Annuler"
+					Command="{Binding Test}"
+					Background="Red"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

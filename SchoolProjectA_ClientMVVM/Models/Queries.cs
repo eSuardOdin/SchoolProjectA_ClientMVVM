@@ -279,5 +279,35 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
+
+
+        /*
+         * 
+         * TAGS
+         * 
+         */
+
+        public static async Task<List<Tag>> GetMoniTags(int id)
+        {
+            using HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            try
+            {
+                HttpResponseMessage res = await client.GetAsync($"http://raspberry:5000/moni/{id}/tags");
+                if (res.IsSuccessStatusCode)
+                {
+                    List<Tag> tags = await res.Content.ReadFromJsonAsync<List<Tag>>();
+                    return tags;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
+
     }
 }
