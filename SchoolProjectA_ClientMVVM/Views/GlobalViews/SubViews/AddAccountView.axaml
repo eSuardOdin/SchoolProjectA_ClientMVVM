@@ -16,6 +16,12 @@
 					Grid.ColumnSpan="2"
 					Spacing="25"
 					>
+			<TextBlock FontWeight="Bold"
+				   Grid.Row="0"
+				   Grid.ColumnSpan="2"
+				   Text="Ajout d'un Compte"
+				   TextAlignment="Center"
+				   Margin="20"/>
 			<TextBox Width="250"
 					 Watermark="Nom du compte"
 					 Text="{Binding BankAccountLabel}"

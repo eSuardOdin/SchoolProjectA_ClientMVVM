@@ -8,25 +8,33 @@
 			 x:Class="SchoolProjectA_ClientMVVM.Views.AddTransactionView"
 			 x:DataType="vm:AddTransactionViewModel">
 	<Grid ShowGridLines="True"
-		  RowDefinitions="Auto,Auto,*"
+		  RowDefinitions="Auto,Auto,*,Auto"
 		  ColumnDefinitions="*,*">
-		<TextBox Grid.Row="0"
+		<TextBlock FontWeight="Bold"
+				   Grid.Row="0"
+				   Grid.ColumnSpan="2"
+				   Text="Ajout d'une transaction"
+				   TextAlignment="Center"
+				   Margin="20"/>
+		
+		<TextBox Grid.Row="1"
 				 Grid.Column="0"
 				 Margin="15"
 				 MaxLength="128"
 				 Watermark="Libellé"/>
-		<TextBox Grid.Row="1"
+		<TextBox Grid.Row="2"
 				 Height="250"
 				 Margin="15"
 				 Watermark="Description"/>
-		<StackPanel Grid.Row="2"
+		<StackPanel Grid.Row="3"
 					Grid.Column="0"
 					Margin="15"
 					Orientation="Horizontal"
 					VerticalAlignment="Center"
 					>
 			<TextBlock Text="Compte : "/>
-			<ComboBox ItemsSource="{Binding BankAccounts}">
+			<ComboBox ItemsSource="{Binding BankAccounts}"
+					  DisplayMemberBinding="">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Path=BankAccountLabel}"/>
