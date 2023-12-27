@@ -246,6 +246,42 @@ namespace SchoolProjectA_ClientMVVM.Models
         }
 
         /// <summary>
+        /// Post a transaction in database
+        /// </summary>
+        /// <param name="transac"></param>
+        /// <returns></returns>
+        public static async Task<Transaction> PostTransaction(TransactionDTO transac)
+        {
+            using HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            try
+            {
+                string transacData = JsonConvert.SerializeObject(transac);
+                var content = new StringContent(transacData, Encoding.UTF8, "application/json");
+                HttpResponseMessage res = await client.PostAsync($"http://raspberry:5000/transaction", content);
+                if (res.IsSuccessStatusCode)
+                {
+                    string responseData = await res.Content.ReadAsStringAsync();
+                    Transaction createdTransac = JsonConvert.DeserializeObject<Transaction>(responseData);
+                    return createdTransac;
+                }
+                else
+                {
+                    var errorResponse = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(errorResponse);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
+
+
+        /// <summary>
         /// Delete transaction from database
         /// </summary>
         /// <param name="transacId">Id of the transaction</param>

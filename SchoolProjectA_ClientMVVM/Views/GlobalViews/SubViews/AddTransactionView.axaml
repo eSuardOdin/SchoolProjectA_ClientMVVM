@@ -99,9 +99,10 @@
 					Grid.Row="4"
 					Orientation="Horizontal">
 			<Button Content="Ajouter"
-					Command="{Binding AddTransaction}"
+					Command="{Binding AddTransactionCommand}"
 					Background="Green"/>
 			<Button Content="Annuler"
+					Command="{Binding CancelCommand}"
 					Background="Red"/>
 		</StackPanel>
 	</Grid>

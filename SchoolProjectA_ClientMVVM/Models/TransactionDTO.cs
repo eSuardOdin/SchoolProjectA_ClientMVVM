@@ -14,4 +14,14 @@ public class TransactionDTO
     public string TransactionLabel { get; set; } = null!;
     public string? TransactionDescription { get; set; }
 
+    public TransactionDTO(int[] tags, int bankAccountId, decimal transactionAmount, DateTime transactionDate, string transactionLabel, string? transactionDescription) 
+    {
+        Tags = tags;
+        BankAccountId = bankAccountId;
+        TransactionAmount = transactionAmount;
+        TransactionDate = transactionDate;
+        TransactionLabel = transactionLabel;
+        TransactionDescription = transactionDescription;
+    }
+
 }

@@ -16,7 +16,7 @@ public class AddTransactionViewModel : ViewModelBase
     private string _transactionLabel;
     private string? _transactionDescription;
     private decimal _transactionAmount;
-    private DateTimeOffset? _transactionDate = DateTime.Today;
+    private DateTimeOffset _transactionDate = DateTime.Today;
     //private int _bankAccountId;
     private ObservableCollection<Tag>? _tags;
     private ObservableCollection<Tag>? _selectedTags = new();
@@ -24,13 +24,22 @@ public class AddTransactionViewModel : ViewModelBase
     private BankAccount? _selectedBankAccount = null;
     public int MoniId { get; set; }
 
-    public ReactiveCommand<Unit, Transaction> AddTransactionCommand { get; set; }
+    public ReactiveCommand<Unit, TransactionDTO> AddTransactionCommand { get; set; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; set; }
 
     public AddTransactionViewModel(int moniId)
     {
         MoniId = moniId;
         InitializeAsync(MoniId);
+
+        // Link Command
+        var isObservable = this.WhenAnyValue(
+            x => x.TransactionLabel,
+            x => !string.IsNullOrWhiteSpace(x));
+        AddTransactionCommand = ReactiveCommand.Create(
+            () => CreateTransaction(), isObservable); // Penser à cast en Transaction pour la liste du ShowTransacVM
+        CancelCommand = ReactiveCommand.Create(
+            () => { });
     }
 
     public string TransactionLabel
@@ -51,7 +60,7 @@ public class AddTransactionViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _transactionAmount, value);
     }
 
-    public DateTimeOffset? TransactionDate
+    public DateTimeOffset TransactionDate
     {
         get => _transactionDate;
         set => this.RaiseAndSetIfChanged(ref _transactionDate, value);
@@ -114,7 +123,7 @@ public class AddTransactionViewModel : ViewModelBase
 
 
 
-    public void AddTransaction()
+    private TransactionDTO CreateTransaction()
     {
         System.Diagnostics.Debug.WriteLine($"Sur le compte'{SelectedBankAccount.BankAccountLabel}':\n\tTransaction: {TransactionLabel}->{TransactionAmount}€\n{TransactionDescription}\n\tBalises:");
         foreach(var t in SelectedTags)
@@ -122,6 +131,17 @@ public class AddTransactionViewModel : ViewModelBase
             System.Diagnostics.Debug.WriteLine(t.TagLabel);
         }
         System.Diagnostics.Debug.WriteLine(TransactionDate);
+
+        // Getting the selected tags id
+        int[] tags = new int[SelectedTags.Count];
+        int i = 0;
+        foreach (var tag in SelectedTags)
+        {
+            tags[i] = tag.TagId;
+            i++;
+        }
+        TransactionDTO transac = new(tags, SelectedBankAccount.BankAccountId,TransactionAmount, TransactionDate.DateTime, TransactionLabel, TransactionDescription);
+        return transac;
     }
 
 }
