@@ -8,8 +8,7 @@
              xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:Class="SchoolProjectA_ClientMVVM.Views.AddTransactionView"
 			 x:DataType="vm:AddTransactionViewModel">
-	<Grid ShowGridLines="True"
-		  RowDefinitions="Auto,Auto,Auto,*,Auto"
+	<Grid RowDefinitions="Auto,Auto,Auto,*,Auto"
 		  ColumnDefinitions="*,*">
 		<!--TITLE-->
 		<TextBlock FontWeight="Bold"
@@ -31,6 +30,7 @@
 				 Height="250"
 				 Margin="15"
 				 Watermark="Description"
+				 TextWrapping="Wrap"
 				 Grid.RowSpan="2"
 				 Text="{Binding TransactionDescription, Mode=TwoWay}"/>
 		
@@ -42,7 +42,8 @@
 					>
 			<TextBlock Text="Compte : "/>
 			<ComboBox ItemsSource="{Binding BankAccounts}"
-					  DisplayMemberBinding="">
+					  SelectedItem="{Binding SelectedBankAccount}"
+					  SelectedIndex="0">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Path=BankAccountLabel}"/>
@@ -98,10 +99,9 @@
 					Grid.Row="4"
 					Orientation="Horizontal">
 			<Button Content="Ajouter"
-					Command="{Binding Test}"
+					Command="{Binding AddTransaction}"
 					Background="Green"/>
 			<Button Content="Annuler"
-					Command="{Binding Test}"
 					Background="Red"/>
 		</StackPanel>
 	</Grid>

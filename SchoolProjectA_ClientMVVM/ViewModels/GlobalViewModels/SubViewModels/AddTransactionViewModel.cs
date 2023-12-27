@@ -21,6 +21,17 @@ public class AddTransactionViewModel : ViewModelBase
     private ObservableCollection<Tag>? _tags;
     private ObservableCollection<Tag>? _selectedTags = new();
     private ObservableCollection<BankAccount>? _bankAccounts;
+    private BankAccount? _selectedBankAccount = null;
+    public int MoniId { get; set; }
+
+    public ReactiveCommand<Unit, Transaction> AddTransactionCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> CancelCommand { get; set; }
+
+    public AddTransactionViewModel(int moniId)
+    {
+        MoniId = moniId;
+        InitializeAsync(MoniId);
+    }
 
     public string TransactionLabel
     {
@@ -64,6 +75,12 @@ public class AddTransactionViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _bankAccounts, value);
     }
 
+    public BankAccount? SelectedBankAccount
+    {
+        get => _selectedBankAccount;
+        set => this.RaiseAndSetIfChanged(ref _selectedBankAccount, value);
+    }
+
     /// <summary>
     /// Load accounts
     /// </summary>
@@ -95,24 +112,16 @@ public class AddTransactionViewModel : ViewModelBase
         Tags = new ObservableCollection<Tag>(tags);
     }
 
-    public int MoniId { get; set; }
 
-    public ReactiveCommand<Unit, Transaction> AddTransactionCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> CancelCommand { get; set; }
 
-    public AddTransactionViewModel(int moniId)
+    public void AddTransaction()
     {
-        MoniId = moniId;
-        InitializeAsync(MoniId);
-    }
-
-
-    public void Test()
-    {
-        foreach(var tag in SelectedTags)
+        System.Diagnostics.Debug.WriteLine($"Sur le compte'{SelectedBankAccount.BankAccountLabel}':\n\tTransaction: {TransactionLabel}->{TransactionAmount}€\n{TransactionDescription}\n\tBalises:");
+        foreach(var t in SelectedTags)
         {
-            System.Diagnostics.Debug.WriteLine(tag.TagLabel);
+            System.Diagnostics.Debug.WriteLine(t.TagLabel);
         }
+        System.Diagnostics.Debug.WriteLine(TransactionDate);
     }
 
 }
