@@ -17,7 +17,8 @@
 					Orientation="Horizontal"
 					Spacing="10"
 					Grid.Column="2"
-					Grid.Row="0">
+					Grid.Row="0"
+					Margin="10">
 			<TextBlock Margin="5">Pas de compte ?</TextBlock>
 			<Button FontWeight="Bold"
 					VerticalAlignment="Top"
