@@ -29,7 +29,11 @@ public class ShowAccountsViewModel : ViewModelBase
     }
 
     
-    // Load accounts
+    /// <summary>
+    /// Load accounts
+    /// </summary>
+    /// <param name="moniId"></param>
+    /// <returns></returns>
     private async Task<List<BankAccount>> LoadBankAccounts(int moniId)
     {
         List<BankAccount> bankAccounts = await Queries.GetMoniAccounts(moniId);

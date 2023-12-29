@@ -7,5 +7,36 @@
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:ShowTagsViewModel"
              x:Class="SchoolProjectA_ClientMVVM.Views.ShowTagsView">
-  Welcome to Avalonia!
+
+	<StackPanel>
+		<Button HorizontalAlignment="Stretch"
+				HorizontalContentAlignment="Center"
+				Background="Green"
+				Foreground="White"
+				FontWeight="Bold"
+				>
+			Ajouter une balise
+			<!--Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
+				x:CompileBindings="False"-->
+		</Button>
+		<ScrollViewer>
+			<ListBox ItemsSource="{Binding Tags}"
+					 MaxHeight="650"
+					 Background="White">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Spacing="8"
+									Orientation="Horizontal">
+							<TextBlock Text="{Binding TagLabel}"/>
+							<TextBlock Text="{Binding TagDescription}"/>
+							<Button Tag="{Binding TagId}">
+								Test
+							</Button>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</ScrollViewer>
+	</StackPanel>
+	
 </UserControl>

@@ -7,27 +7,7 @@
              x:Class="SchoolProjectA_ClientMVVM.Views.AccountsView"
 			 x:DataType="vm:AccountsViewModel">
 	
-	<DockPanel>
 		<!-- Content -->
 		<ContentControl 
-			Content="{Binding AccountsContentViewModel}"
-			DockPanel.Dock="Top"/>
-		<!-- Content -->
-
-		<!-- Add button 
-		<Panel VerticalAlignment="Top"
-			   HorizontalAlignment="Right">
-			<Button Margin="0,60,60,0"
-					Name="ShowButton"
-					Command="{Binding AddAccount}">Ajouter</Button>
-		</Panel>
-
-		<StackPanel Orientation="Horizontal"
-					Spacing="10">
-			<Button IsVisible="False"
-					Name="ValidButton">Confirmer</Button>
-			<Button IsVisible="False"
-					Name="CancelButton">Annuler</Button>
-		</StackPanel> -->
-	</DockPanel>
+			Content="{Binding AccountsContentViewModel}"/>
 </UserControl>
