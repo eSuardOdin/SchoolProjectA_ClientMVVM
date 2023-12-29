@@ -29,20 +29,17 @@ public class GlobalViewModel : ViewModelBase
 
     public void ShowTransactions()
     {
-        System.Diagnostics.Debug.WriteLine("Clic sur transaction");
         ContainedViewModel = new TransactionsViewModel(MyMoni.MoniId);
     }
 
     public void ShowAccounts()
     {
-        System.Diagnostics.Debug.WriteLine("Clic sur account");
         ContainedViewModel = new AccountsViewModel(MyMoni.MoniId);
     }
 
     public void ShowTags()
     {
-        System.Diagnostics.Debug.WriteLine("Clic sur tag");
-        ContainedViewModel = new TagsViewModel();
+        ContainedViewModel = new TagsViewModel(MyMoni.MoniId);
     }
 
 }
