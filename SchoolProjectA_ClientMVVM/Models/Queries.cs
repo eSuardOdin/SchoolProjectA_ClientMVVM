@@ -345,5 +345,28 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
+        /*public static async Task<List<Transaction>> GetTagTransactions(int moniId, int tagId)
+        {
+            List<Transaction> transactionsTagged = new List<Transaction>();
+            // Let's go for awfulness
+            // Get all moni accounts
+            List<BankAccount>? bankAccounts = await Queries.GetMoniAccounts(moniId);
+            if(bankAccounts != null)
+            {
+                // Check all accounts transaction
+                foreach(BankAccount bankAccount in bankAccounts)
+                {
+                    List<Transaction>? transactions = await Queries.GetAccountTransactions(bankAccount.BankAccountId);
+                    if (transactions != null)
+                    {
+                        foreach(Transaction t in transactions)
+                        {
+                            System.Diagnostics.Debug.WriteLine(t.)
+                        }
+                    }
+                }
+            }
+        }*/
+
     }
 }

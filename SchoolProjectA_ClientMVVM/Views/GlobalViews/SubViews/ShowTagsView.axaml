@@ -22,17 +22,27 @@
 		<ScrollViewer>
 			<ListBox ItemsSource="{Binding Tags}"
 					 MaxHeight="650"
-					 Background="White">
+					 Background="White"
+					 HorizontalAlignment="Center"
+					 MaxWidth="400">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<StackPanel Spacing="8"
-									Orientation="Horizontal">
-							<TextBlock Text="{Binding TagLabel}"/>
-							<TextBlock Text="{Binding TagDescription}"/>
-							<Button Tag="{Binding TagId}">
-								Test
-							</Button>
-						</StackPanel>
+						<ScrollViewer>
+							<Border BorderBrush="Gray"
+									BorderThickness="2"
+									CornerRadius="5">
+								<StackPanel Spacing="8"
+											Margin="3">
+									<TextBlock Text="{Binding TagLabel}"
+											   FontWeight="Bold"/>
+									<TextBlock Text="{Binding TagDescription}"
+											   TextWrapping="Wrap"/>
+									<Button Tag="{Binding TagId}">
+										Test
+									</Button>
+								</StackPanel>
+							</Border>
+						</ScrollViewer>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
