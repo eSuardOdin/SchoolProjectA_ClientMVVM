@@ -8,120 +8,146 @@
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:ShowTransactionsViewModel">
 	<StackPanel>
+		<!--Add transaction button-->
 		<Button HorizontalAlignment="Stretch"
 					HorizontalContentAlignment="Center"
 					Background="Green"
 					Foreground="White"
 					FontWeight="Bold"
 					Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddTransaction}"
-					x:CompileBindings="False">
+					x:CompileBindings="False"
+				Margin="5,0,5,0">
 			Ajouter une transaction
 		</Button>
-		
-		<Grid RowDefinitions="*,250">	
-			<ScrollViewer Grid.Row="0"
-						  BorderBrush="Black"
-						  BorderThickness="1">
+
+		<Grid RowDefinitions="*,250">
 			
-				<ListBox ItemsSource="{Binding Transactions}"
-						 MaxHeight="450"
-						 Background="White">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<Grid ColumnDefinitions="*, *, *, *">
-								<TextBlock Grid.Column="0"
-										   Text="{Binding TransactionLabel}"/>
-								<TextBlock Grid.Column="1"
-										   Text="{Binding TransactionDate}"/>
-								<TextBlock Grid.Column="2"
-										   Text="{Binding TransactionAmount, StringFormat={}{0}€}"/>
+			<!--Transaction list-->
+			<Border BorderBrush="Black"
+					BorderThickness="2"
+					CornerRadius="10"
+					Margin="5">				
+				<ScrollViewer Grid.Row="0"
+							  BorderBrush="Black"
+							  BorderThickness="1">
 
-								<Panel HorizontalAlignment="Right"
-									   Grid.Column="3">
-									<Button Background="Red"
-											Tag="{Binding TransactionId}"
-											x:CompileBindings="False"
-											Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.TransactionsContentViewModel.DeleteTransactionCommand}">
-										<Button.CommandParameter>
-											<Binding Path="TransactionId" />
-										</Button.CommandParameter>
-										Supprimer
-									</Button>
-								</Panel>
-							</Grid>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</ScrollViewer>
+					<ListBox ItemsSource="{Binding Transactions}"
+							 MaxHeight="450"
+							 Background="LightCyan">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid ColumnDefinitions="*, *, *, *">
+									<TextBlock Grid.Column="0"
+											   Text="{Binding TransactionLabel}"/>
+									<TextBlock Grid.Column="1"
+											   Text="{Binding TransactionDate}"/>
+									<TextBlock Grid.Column="2"
+											   Text="{Binding TransactionAmount, StringFormat={}{0}€}"/>
 
+									<Panel HorizontalAlignment="Right"
+										   Grid.Column="3">
+										<Button Background="Red"
+												Tag="{Binding TransactionId}"
+												x:CompileBindings="False"
+												Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.TransactionsContentViewModel.DeleteTransactionCommand}">
+											<Button.CommandParameter>
+												<Binding Path="TransactionId" />
+											</Button.CommandParameter>
+											Supprimer
+										</Button>
+									</Panel>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</ScrollViewer>
+			</Border>
+
+			<!--FILTER TRANSACTIONS-->
 			<StackPanel Grid.Row="1">
 				<Border BorderBrush="Black"
-						BorderThickness="2"/>
-				<Grid ColumnDefinitions="*,*">
-					<StackPanel Grid.Column="0"
-					Margin="15"
-					Orientation="Horizontal"
-					VerticalAlignment="Center"
-					>
-						<TextBlock Text="Compte : "/>
-						<ComboBox ItemsSource="{Binding BankAccounts}"
-								  SelectedItem="{Binding SelectedBankAccount}"
-								  SelectedIndex="0">
-							<ComboBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding Path=BankAccountLabel}"/>
-								</DataTemplate>
-							</ComboBox.ItemTemplate>
-						</ComboBox>
-					</StackPanel>
-				</Grid>
-				
+						BorderThickness="2"
+						CornerRadius="10"
+						Margin="5"
+						Background="LightGray">
+					
+					<Grid ColumnDefinitions="*,*"
+						  RowDefinitions="*,*,*,*">
+						
+						<!--Label-->
+						<TextBlock Grid.ColumnSpan="2"
+								   Grid.Row="0"
+								   Text="Filtrer les transactions"
+								   HorizontalAlignment="Center"
+								   TextDecorations="Underline"
+								   FontWeight="Bold"/>
+						<!--Account-->
+						<StackPanel Grid.Column="0"
+									Grid.Row="1"
+									Margin="10"
+									Orientation="Horizontal"
+									VerticalAlignment="Center">
+							<TextBlock Text="Compte : "/>
+							<ComboBox ItemsSource="{Binding BankAccounts}"
+									  SelectedItem="{Binding SelectedBankAccount}"
+									  SelectedIndex="0">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding Path=BankAccountLabel}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
+						</StackPanel>
+						<!--Tags-->
+						<StackPanel Grid.Column="0"
+									Grid.Row="2"
+									Margin="10"
+									Orientation="Horizontal"
+									VerticalAlignment="Center">
+							<TextBlock Text="Balises : "/>
+							<ScrollViewer Height="75">
+								<ListBox ItemsSource="{Binding Tags}"
+										 SelectionMode="Multiple, Toggle"
+										 SelectedItems="{Binding SelectedTags, Mode=TwoWay}">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding Path=TagLabel}"/>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
+							</ScrollViewer>
+						</StackPanel>
+						<!--Dates-->
+						<StackPanel Margin="10"
+								    Grid.Column="1"
+					                Grid.Row="1"
+									Orientation="Horizontal"
+									VerticalAlignment="Center">
+							<TextBlock Text="Date de début : "/>
+							<DatePicker DayFormat="ddd dd"
+										SelectedDate="{Binding TransactionStartDate, Mode=TwoWay}"/>
+						</StackPanel>
+						<StackPanel Margin="10"
+								    Grid.Column="1"
+					                Grid.Row="2"
+									Orientation="Horizontal"
+									VerticalAlignment="Center">
+							<TextBlock Text="Date de fin :      "/>
+							<DatePicker DayFormat="ddd dd"
+										SelectedDate="{Binding TransactionEndDate, Mode=TwoWay}"/>
+						</StackPanel>
+						<!--Filter button-->
+						<Button Grid.ColumnSpan="2"
+								Grid.Row="3"
+								Content="Filtrer"
+								HorizontalAlignment="Center"
+								Margin="5"/>
+					</Grid>
+				</Border>
 			</StackPanel>
 		</Grid>
 	</StackPanel>
-	<!--
-	<StackPanel>
-		<Button HorizontalAlignment="Stretch"
-					HorizontalContentAlignment="Center"
-					Background="Green"
-					Foreground="White"
-					FontWeight="Bold"
-					Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddTransaction}"
-					x:CompileBindings="False">
-			Ajouter une transaction
-		</Button>
-		<ScrollViewer>
-			<ListBox ItemsSource="{Binding Transactions}"
-					 MaxHeight="650"
-					 Background="White">
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<Grid ColumnDefinitions="*, *, *, *">
-							<TextBlock Grid.Column="0"
-									   Text="{Binding TransactionLabel}"/>
-							<TextBlock Grid.Column="1"
-									   Text="{Binding TransactionDate}"/>
-							<TextBlock Grid.Column="2"
-									   Text="{Binding TransactionAmount, StringFormat={}{0}€}"/>
-					
-							<Panel HorizontalAlignment="Right"
-								   Grid.Column="3">
-								<Button Background="Red"
-										Tag="{Binding TransactionId}"
-										x:CompileBindings="False"
-										Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.TransactionsContentViewModel.DeleteTransactionCommand}">
-									<Button.CommandParameter>
-										<Binding Path="TransactionId" />
-									</Button.CommandParameter>
-									Supprimer
-								</Button>
-							</Panel>
-						</Grid>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
-		</ScrollViewer>
-	</StackPanel>-->
+
 	
 	
 </UserControl>
