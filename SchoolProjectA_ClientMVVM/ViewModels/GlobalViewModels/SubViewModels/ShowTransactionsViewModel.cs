@@ -14,18 +14,47 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class ShowTransactionsViewModel : ViewModelBase
 {
     private ObservableCollection<Transaction> _transactions;
+    private DateTimeOffset _transactionStartDate = DateTime.Today;
+    private DateTimeOffset _transactionEndDate = DateTime.Today;
+    private ObservableCollection<Tag>? _tags;
+    private ObservableCollection<Tag>? _selectedTags = new();
+    private ObservableCollection<BankAccount>? _bankAccounts;
+    private BankAccount? _selectedBankAccount = null;
     private int MyMoniId { get; set; }
-    public ReactiveCommand<int, Unit> DeleteTransactionCommand { get; }
-    public ShowTransactionsViewModel(int moniId) 
+
+    /*
+     * Attributes
+     */
+    public DateTimeOffset TransactionStartDate
     {
-        MyMoniId = moniId;
-        InitializeAsync();
-        DeleteTransactionCommand = ReactiveCommand.Create<int>(DeleteTransaction);
+        get => _transactionStartDate;
+        set => this.RaiseAndSetIfChanged(ref _transactionStartDate, value);
+    }
+
+    public DateTimeOffset TransactionEndDate
+    {
+        get => _transactionEndDate;
+        set => this.RaiseAndSetIfChanged(ref _transactionEndDate, value);
+    }
+
+    public ObservableCollection<Tag> Tags
+    {
+        get => _tags;
+        set => this.RaiseAndSetIfChanged(ref this._tags, value);
     }
     public ObservableCollection<Transaction> Transactions
     {
         get => _transactions;
         set => this.RaiseAndSetIfChanged(ref this._transactions, value);
+    }
+
+    public ReactiveCommand<int, Unit> DeleteTransactionCommand { get; }
+    public ReactiveCommand<Unit,Unit> RefreshTransactionCommand { get; }
+    public ShowTransactionsViewModel(int moniId) 
+    {
+        MyMoniId = moniId;
+        InitializeAsync();
+        DeleteTransactionCommand = ReactiveCommand.Create<int>(DeleteTransaction);
     }
 
     // Load transactions
@@ -43,12 +72,16 @@ public class ShowTransactionsViewModel : ViewModelBase
         }
         return transactions;
     }
+    //Load tags
+    private async Task<List<Tag>> LoadTags() => await Queries.GetMoniTags(MyMoniId);
 
     // Cast to Observable collection
     private async void InitializeAsync()
     {
         List<Transaction> transac = await LoadTransactions();
         Transactions = new ObservableCollection<Transaction>(transac);
+        List<Tag> tags = await LoadTags();
+        Tags = new ObservableCollection<Tag>(tags);
     }
 
     /// <summary>

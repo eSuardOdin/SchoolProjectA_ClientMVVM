@@ -19,6 +19,7 @@
 			<!--Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
 				x:CompileBindings="False"-->
 		</Button>
+		<!--
 		<ScrollViewer>
 			<ListBox ItemsSource="{Binding Tags}"
 					 MaxHeight="650"
@@ -46,7 +47,39 @@
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-		</ScrollViewer>
+		</ScrollViewer>-->
+
+
+		<ItemsControl ItemsSource="{Binding Tags}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<ScrollViewer Width="200"
+								  Height="200"
+								  Margin="20">
+						<Border BorderBrush="Gray"
+								BorderThickness="2"
+								CornerRadius="5">
+							<StackPanel Spacing="8"
+										Margin="3">
+								<TextBlock Text="{Binding TagLabel}"
+										   FontWeight="Bold"/>
+								<TextBlock Text="{Binding TagDescription}"
+										   TextWrapping="Wrap"/>
+								<Button Tag="{Binding TagId}">
+									Test
+								</Button>
+							</StackPanel>
+						</Border>
+					</ScrollViewer>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+		
 	</StackPanel>
 	
 </UserControl>

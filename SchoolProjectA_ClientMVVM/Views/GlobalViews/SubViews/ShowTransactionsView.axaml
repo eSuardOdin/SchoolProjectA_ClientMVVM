@@ -49,6 +49,9 @@
 				</ListBox.ItemTemplate>
 			</ListBox>
 		</ScrollViewer>
+		<StackPanel>
+			
+		</StackPanel>
 	</StackPanel>
 	
 	

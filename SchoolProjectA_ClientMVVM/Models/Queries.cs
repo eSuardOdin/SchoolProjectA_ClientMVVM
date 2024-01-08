@@ -245,6 +245,28 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
+        public static async Task<List<Transaction>> GetTaggedTransactions(int tagId)
+        {
+            using HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            try
+            {
+                HttpResponseMessage res = await client.GetAsync($"http://raspberry:5000/transaction/GetTagged?tagId={tagId}");
+                if (res.IsSuccessStatusCode)
+                {
+                    List<Transaction> transactions = await res.Content.ReadFromJsonAsync<List<Transaction>>();
+                    return transactions;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
+
         /// <summary>
         /// Post a transaction in database
         /// </summary>
