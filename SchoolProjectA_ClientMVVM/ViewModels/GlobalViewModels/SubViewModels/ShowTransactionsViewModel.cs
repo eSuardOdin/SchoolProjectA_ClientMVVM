@@ -48,6 +48,24 @@ public class ShowTransactionsViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref this._transactions, value);
     }
 
+    public ObservableCollection<Tag>? SelectedTags
+    {
+        get => _selectedTags;
+        set => this.RaiseAndSetIfChanged(ref _selectedTags, value);
+    }
+
+    public ObservableCollection<BankAccount> BankAccounts
+    {
+        get => _bankAccounts;
+        set => this.RaiseAndSetIfChanged(ref _bankAccounts, value);
+    }
+
+    public BankAccount? SelectedBankAccount
+    {
+        get => _selectedBankAccount;
+        set => this.RaiseAndSetIfChanged(ref _selectedBankAccount, value);
+    }
+
     public ReactiveCommand<int, Unit> DeleteTransactionCommand { get; }
     public ReactiveCommand<Unit,Unit> RefreshTransactionCommand { get; }
     public ShowTransactionsViewModel(int moniId) 
@@ -74,6 +92,8 @@ public class ShowTransactionsViewModel : ViewModelBase
     }
     //Load tags
     private async Task<List<Tag>> LoadTags() => await Queries.GetMoniTags(MyMoniId);
+    //Load BankAccounts
+    private async Task<List<BankAccount>> LoadAccounts() => await Queries.GetMoniAccounts(MyMoniId); 
 
     // Cast to Observable collection
     private async void InitializeAsync()
@@ -82,6 +102,8 @@ public class ShowTransactionsViewModel : ViewModelBase
         Transactions = new ObservableCollection<Transaction>(transac);
         List<Tag> tags = await LoadTags();
         Tags = new ObservableCollection<Tag>(tags);
+        List<BankAccount> accounts= await LoadAccounts();
+        BankAccounts = new ObservableCollection<BankAccount>(accounts);
     }
 
     /// <summary>
@@ -95,5 +117,13 @@ public class ShowTransactionsViewModel : ViewModelBase
         {
             Transactions.Remove(Transactions.FirstOrDefault(x => x.TransactionId == transacId));
         }
+    }
+
+    /// <summary>
+    /// Click to get filter to null and show all transactions
+    /// </summary>
+    public void ResetFilters()
+    {
+
     }
 }

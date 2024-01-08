@@ -7,7 +7,79 @@
              x:Class="SchoolProjectA_ClientMVVM.Views.ShowTransactionsView"
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:ShowTransactionsViewModel">
+	<StackPanel>
+		<Button HorizontalAlignment="Stretch"
+					HorizontalContentAlignment="Center"
+					Background="Green"
+					Foreground="White"
+					FontWeight="Bold"
+					Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddTransaction}"
+					x:CompileBindings="False">
+			Ajouter une transaction
+		</Button>
+		
+		<Grid RowDefinitions="*,250">	
+			<ScrollViewer Grid.Row="0"
+						  BorderBrush="Black"
+						  BorderThickness="1">
+			
+				<ListBox ItemsSource="{Binding Transactions}"
+						 MaxHeight="450"
+						 Background="White">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid ColumnDefinitions="*, *, *, *">
+								<TextBlock Grid.Column="0"
+										   Text="{Binding TransactionLabel}"/>
+								<TextBlock Grid.Column="1"
+										   Text="{Binding TransactionDate}"/>
+								<TextBlock Grid.Column="2"
+										   Text="{Binding TransactionAmount, StringFormat={}{0}€}"/>
 
+								<Panel HorizontalAlignment="Right"
+									   Grid.Column="3">
+									<Button Background="Red"
+											Tag="{Binding TransactionId}"
+											x:CompileBindings="False"
+											Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.TransactionsContentViewModel.DeleteTransactionCommand}">
+										<Button.CommandParameter>
+											<Binding Path="TransactionId" />
+										</Button.CommandParameter>
+										Supprimer
+									</Button>
+								</Panel>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</ScrollViewer>
+
+			<StackPanel Grid.Row="1">
+				<Border BorderBrush="Black"
+						BorderThickness="2"/>
+				<Grid ColumnDefinitions="*,*">
+					<StackPanel Grid.Column="0"
+					Margin="15"
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					>
+						<TextBlock Text="Compte : "/>
+						<ComboBox ItemsSource="{Binding BankAccounts}"
+								  SelectedItem="{Binding SelectedBankAccount}"
+								  SelectedIndex="0">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Path=BankAccountLabel}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+				</Grid>
+				
+			</StackPanel>
+		</Grid>
+	</StackPanel>
+	<!--
 	<StackPanel>
 		<Button HorizontalAlignment="Stretch"
 					HorizontalContentAlignment="Center"
@@ -49,10 +121,7 @@
 				</ListBox.ItemTemplate>
 			</ListBox>
 		</ScrollViewer>
-		<StackPanel>
-			
-		</StackPanel>
-	</StackPanel>
+	</StackPanel>-->
 	
 	
 </UserControl>

@@ -17,7 +17,6 @@ public class AddTransactionViewModel : ViewModelBase
     private string? _transactionDescription;
     private decimal _transactionAmount;
     private DateTimeOffset _transactionDate = DateTime.Today;
-    //private int _bankAccountId;
     private ObservableCollection<Tag>? _tags;
     private ObservableCollection<Tag>? _selectedTags = new();
     private ObservableCollection<BankAccount>? _bankAccounts;
