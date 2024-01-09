@@ -14,6 +14,7 @@ namespace SchoolProjectA_ClientMVVM.ViewModels;
 public class ShowTransactionsViewModel : ViewModelBase
 {
     private ObservableCollection<Transaction> _transactions;
+    private ObservableCollection<Transaction> _cachedTransactions; //To backup
     private DateTimeOffset _transactionStartDate = DateTime.Today;
     private DateTimeOffset _transactionEndDate = DateTime.Today;
     private ObservableCollection<Tag>? _tags;
@@ -100,6 +101,7 @@ public class ShowTransactionsViewModel : ViewModelBase
     {
         List<Transaction> transac = await LoadTransactions();
         Transactions = new ObservableCollection<Transaction>(transac);
+        _cachedTransactions = Transactions;
         List<Tag> tags = await LoadTags();
         Tags = new ObservableCollection<Tag>(tags);
         List<BankAccount> accounts= await LoadAccounts();
@@ -122,9 +124,20 @@ public class ShowTransactionsViewModel : ViewModelBase
     /// <summary>
     /// Click to get filter to null and show all transactions
     /// </summary>
-    public void ResetFilters()
+    public async void ResetFilters()
     {
         SelectedTags = new();
         SelectedBankAccount = new();
+        TransactionStartDate = DateTime.Today;
+        TransactionEndDate = DateTime.Today;
+        Transactions = _cachedTransactions; // Get original transactions
+    }
+
+    public void ApplyFilter()
+    {
+        if(SelectedBankAccount != null)
+        {
+            Transactions = new ObservableCollection<Transaction>(_cachedTransactions.Where(x => x.BankAccountId == SelectedBankAccount.BankAccountId).ToList());
+        }
     }
 }

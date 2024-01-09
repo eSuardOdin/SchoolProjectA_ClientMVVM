@@ -146,7 +146,8 @@
 							<Button Content="Filtrer"
 									HorizontalAlignment="Center"
 									Background="Green"
-									Foreground="Ivory"/>
+									Foreground="Ivory"
+									Command="{Binding ApplyFilter}"/>
 							<Button Content="Reset"
 									Foreground="Ivory"
 									Command="{Binding ResetFilters}"/>
