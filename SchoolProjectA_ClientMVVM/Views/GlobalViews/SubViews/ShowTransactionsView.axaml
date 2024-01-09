@@ -136,12 +136,22 @@
 							<DatePicker DayFormat="ddd dd"
 										SelectedDate="{Binding TransactionEndDate, Mode=TwoWay}"/>
 						</StackPanel>
+
+						<StackPanel Grid.ColumnSpan="2"
+									Grid.Row="3"
+									Spacing="5"
+									HorizontalAlignment="Center"
+									Orientation="Horizontal"
+									Margin="5">
+							<Button Content="Filtrer"
+									HorizontalAlignment="Center"
+									Background="Green"
+									Foreground="Ivory"/>
+							<Button Content="Reset"
+									Foreground="Ivory"
+									Command="{Binding ResetFilters}"/>
+						</StackPanel>
 						<!--Filter button-->
-						<Button Grid.ColumnSpan="2"
-								Grid.Row="3"
-								Content="Filtrer"
-								HorizontalAlignment="Center"
-								Margin="5"/>
 					</Grid>
 				</Border>
 			</StackPanel>

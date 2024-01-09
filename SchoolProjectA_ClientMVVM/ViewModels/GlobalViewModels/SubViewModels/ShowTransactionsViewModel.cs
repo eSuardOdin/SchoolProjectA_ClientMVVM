@@ -124,6 +124,7 @@ public class ShowTransactionsViewModel : ViewModelBase
     /// </summary>
     public void ResetFilters()
     {
-
+        SelectedTags = new();
+        SelectedBankAccount = new();
     }
 }
