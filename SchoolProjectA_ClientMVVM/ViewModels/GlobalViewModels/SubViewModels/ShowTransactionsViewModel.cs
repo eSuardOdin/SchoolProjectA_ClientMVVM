@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reactive;
+using DynamicData.Binding;
 
 
 namespace SchoolProjectA_ClientMVVM.ViewModels;
@@ -133,11 +134,34 @@ public class ShowTransactionsViewModel : ViewModelBase
         Transactions = _cachedTransactions; // Get original transactions
     }
 
-    public void ApplyFilter()
+    public async void ApplyFilter()
     {
+        Transactions = _cachedTransactions;
+        // Get bank account's transactions
         if(SelectedBankAccount != null)
         {
             Transactions = new ObservableCollection<Transaction>(_cachedTransactions.Where(x => x.BankAccountId == SelectedBankAccount.BankAccountId).ToList());
+        }
+        // Get tagged transactions
+        if(SelectedTags != null)
+        {
+            ObservableCollection<Transaction> filteredTransactions = new();
+            
+            foreach (var tag in SelectedTags)
+            {
+                // Get all Transactions with a tag
+                ObservableCollection<Transaction> taggedTransacs = new ObservableCollection<Transaction>(await Queries.GetTaggedTransactions(tag.TagId));
+                foreach (var taggedTransac in taggedTransacs)
+                {
+                    // Check if not already filtered by bank account
+                    Transaction t = Transactions.Where(x => x.TransactionId == taggedTransac.TransactionId).FirstOrDefault();
+                    if(t !=null)
+                    {
+                        filteredTransactions.Add(t);
+                    }
+                }
+            }
+            Transactions = new ObservableCollection<Transaction>(filteredTransactions.Distinct().ToList());
         }
     }
 }
