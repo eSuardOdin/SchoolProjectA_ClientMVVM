@@ -84,13 +84,13 @@ public class ShowTransactionsViewModel : ViewModelBase
         DeleteTransactionCommand = ReactiveCommand.Create<int>(DeleteTransaction);
     }
 
-
     // Init form dates with transactions dates
     private void SetDates()
     {
 
-        /*TransactionStartDate = */System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Min());
-        /*TransactionEndDate = */
+        TransactionStartDate = (from d in _cachedTransactions select d.TransactionDate).Min();
+        System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Min());
+        TransactionEndDate = (from d in _cachedTransactions select d.TransactionDate).Max();
         System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Max());
     }
 
@@ -145,11 +145,14 @@ public class ShowTransactionsViewModel : ViewModelBase
     /// </summary>
     public async void ResetFilters()
     {
-        SelectedTags = new();
+        /*SelectedTags = new();
         SelectedBankAccount = new();
         TransactionStartDate = DateTime.Today;
         TransactionEndDate = DateTime.Today;
         Transactions = _cachedTransactions; // Get original transactions
+        // Reset dates
+        SetDates();*/
+        InitializeAsync();
     }
 
     public async void ApplyFilter()
