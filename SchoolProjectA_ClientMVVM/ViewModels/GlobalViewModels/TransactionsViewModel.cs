@@ -15,7 +15,7 @@ public class TransactionsViewModel : ViewModelBase
 {
     private ViewModelBase _transactionsContentViewModel;
     public int MoniId { get; set; }
-    public ShowTransactionsViewModel ShowTransactions { get; }
+    public ShowTransactionsViewModel ShowTransactions { get; set; }
     public TransactionsViewModel(int moniId) 
     {
         MoniId = moniId;
@@ -50,6 +50,7 @@ public class TransactionsViewModel : ViewModelBase
                         ShowTransactions.Transactions.Add(transac);
                     }
                 }
+                ShowTransactions = new(MoniId); // Added to refresh on transaction adding
                 TransactionsContentViewModel = ShowTransactions;
             });
         TransactionsContentViewModel = addTransacVM;
