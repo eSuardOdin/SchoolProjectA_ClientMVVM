@@ -30,13 +30,31 @@ public class ShowTransactionsViewModel : ViewModelBase
     public DateTimeOffset TransactionStartDate
     {
         get => _transactionStartDate;
-        set => this.RaiseAndSetIfChanged(ref _transactionStartDate, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _transactionStartDate, value);
+            if(_transactionEndDate < value)
+            {
+                TransactionEndDate = value;
+            }
+        }
     }
 
     public DateTimeOffset TransactionEndDate
     {
         get => _transactionEndDate;
-        set => this.RaiseAndSetIfChanged(ref _transactionEndDate, value);
+        set
+        {   
+            if(value < _transactionStartDate)
+            {
+                this.RaiseAndSetIfChanged(ref _transactionEndDate, _transactionStartDate);
+                _transactionEndDate = _transactionStartDate;
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _transactionEndDate, value);
+            }
+        }
     }
 
     public ObservableCollection<Tag> Tags
