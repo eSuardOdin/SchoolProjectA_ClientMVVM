@@ -70,11 +70,28 @@ public class ShowTransactionsViewModel : ViewModelBase
 
     public ReactiveCommand<int, Unit> DeleteTransactionCommand { get; }
     public ReactiveCommand<Unit,Unit> RefreshTransactionCommand { get; }
+
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="moniId"></param>
     public ShowTransactionsViewModel(int moniId) 
     {
         MyMoniId = moniId;
         InitializeAsync();
+        
         DeleteTransactionCommand = ReactiveCommand.Create<int>(DeleteTransaction);
+    }
+
+
+    // Init form dates with transactions dates
+    private void SetDates()
+    {
+
+        /*TransactionStartDate = */System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Min());
+        /*TransactionEndDate = */
+        System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Max());
     }
 
     // Load transactions
@@ -107,6 +124,7 @@ public class ShowTransactionsViewModel : ViewModelBase
         Tags = new ObservableCollection<Tag>(tags);
         List<BankAccount> accounts= await LoadAccounts();
         BankAccounts = new ObservableCollection<BankAccount>(accounts);
+        SetDates();
     }
 
     /// <summary>
@@ -143,8 +161,9 @@ public class ShowTransactionsViewModel : ViewModelBase
             Transactions = new ObservableCollection<Transaction>(_cachedTransactions.Where(x => x.BankAccountId == SelectedBankAccount.BankAccountId).ToList());
         }
         // Get tagged transactions
-        if(SelectedTags != null)
+        if(SelectedTags.Count != 0)
         {
+
             ObservableCollection<Transaction> filteredTransactions = new();
             
             foreach (var tag in SelectedTags)
@@ -163,5 +182,7 @@ public class ShowTransactionsViewModel : ViewModelBase
             }
             Transactions = new ObservableCollection<Transaction>(filteredTransactions.Distinct().ToList());
         }
+        // Get by date
+
     }
 }
