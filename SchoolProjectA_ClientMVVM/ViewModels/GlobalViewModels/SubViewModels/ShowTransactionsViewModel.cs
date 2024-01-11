@@ -180,17 +180,16 @@ public class ShowTransactionsViewModel : ViewModelBase
     public async void ApplyFilter()
     {
         Transactions = _cachedTransactions;
+        ObservableCollection<Transaction> filteredTransactions = Transactions;
         // Get bank account's transactions
-        if(SelectedBankAccount != null)
+        if (SelectedBankAccount != null)
         {
-            Transactions = new ObservableCollection<Transaction>(_cachedTransactions.Where(x => x.BankAccountId == SelectedBankAccount.BankAccountId).ToList());
+            filteredTransactions = new ObservableCollection<Transaction>(_cachedTransactions.Where(x => x.BankAccountId == SelectedBankAccount.BankAccountId).ToList());
         }
         // Get tagged transactions
         if(SelectedTags.Count != 0)
         {
-
-            ObservableCollection<Transaction> filteredTransactions = new();
-            
+            ObservableCollection<Transaction> tempTransacs = new();
             foreach (var tag in SelectedTags)
             {
                 // Get all Transactions with a tag
@@ -198,22 +197,23 @@ public class ShowTransactionsViewModel : ViewModelBase
                 foreach (var taggedTransac in taggedTransacs)
                 {
                     // Check if not already filtered by bank account
-                    Transaction t = Transactions.Where(x => x.TransactionId == taggedTransac.TransactionId).FirstOrDefault();
-                    if(t !=null)
+                    Transaction t = filteredTransactions.Where(x => x.TransactionId == taggedTransac.TransactionId).FirstOrDefault();
+                    if(t != null)
                     {
-                        filteredTransactions.Add(t);
+                        tempTransacs.Add(taggedTransac);
                     }
                 }
             }
-            Transactions = new ObservableCollection<Transaction>(filteredTransactions.Distinct().ToList());
+            filteredTransactions = new ObservableCollection<Transaction>(tempTransacs.Distinct().ToList());
         }
         // Get by date
 
-        List<Transaction> datedTransactions = Transactions.Where(x => x.TransactionDate >= TransactionStartDate && x.TransactionDate <= TransactionEndDate).ToList();
+        List<Transaction> datedTransactions = filteredTransactions.Where(x => x.TransactionDate >= TransactionStartDate && x.TransactionDate <= TransactionEndDate).ToList();
+        filteredTransactions = new ObservableCollection<Transaction>(datedTransactions);
         foreach(var transaction in datedTransactions)
         {
             System.Diagnostics.Debug.WriteLine($"{transaction.TransactionLabel}");  
         }
-        Transactions = new(datedTransactions);
+        Transactions = new ObservableCollection<Transaction>(filteredTransactions.Distinct().ToList());
     }
 }
