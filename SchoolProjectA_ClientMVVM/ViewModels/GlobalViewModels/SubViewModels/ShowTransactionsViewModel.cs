@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reactive;
 using DynamicData.Binding;
+using System.Reactive.Linq;
 
 
 namespace SchoolProjectA_ClientMVVM.ViewModels;
@@ -173,6 +174,9 @@ public class ShowTransactionsViewModel : ViewModelBase
         InitializeAsync();
     }
 
+    /// <summary>
+    /// Filter the transactions depending on filters values
+    /// </summary>
     public async void ApplyFilter()
     {
         Transactions = _cachedTransactions;
@@ -205,5 +209,11 @@ public class ShowTransactionsViewModel : ViewModelBase
         }
         // Get by date
 
+        List<Transaction> datedTransactions = Transactions.Where(x => x.TransactionDate >= TransactionStartDate && x.TransactionDate <= TransactionEndDate).ToList();
+        foreach(var transaction in datedTransactions)
+        {
+            System.Diagnostics.Debug.WriteLine($"{transaction.TransactionLabel}");  
+        }
+        Transactions = new(datedTransactions);
     }
 }
