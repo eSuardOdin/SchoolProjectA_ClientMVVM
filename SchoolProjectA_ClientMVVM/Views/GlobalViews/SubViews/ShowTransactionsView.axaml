@@ -34,9 +34,11 @@
 					<ListBox ItemsSource="{Binding Transactions}"
 							 MaxHeight="450"
 							 Background="LightCyan">
+						<!--Transactions-->
 						<ListBox.ItemTemplate>
 							<DataTemplate>
-								<Grid ColumnDefinitions="*, *, *, *">
+								<Grid ColumnDefinitions="*, *, *, *"
+									  RowDefinitions="*,*">
 									<TextBlock Grid.Column="0"
 											   Text="{Binding TransactionLabel}"/>
 									<TextBlock Grid.Column="1"
@@ -56,6 +58,23 @@
 											Supprimer
 										</Button>
 									</Panel>
+									<!--Expander description-->
+									<Expander Grid.Row="1"
+											  Grid.ColumnSpan="4"
+											  HorizontalAlignment="Stretch">
+										<Expander.Header>
+											Description
+										</Expander.Header>
+										<Grid RowDefinitions="*,*">
+											<StackPanel Orientation="Horizontal" Grid.Row="0">
+												<TextBlock Text="Compte en banque : "/>
+												<TextBlock Text="TODO"/>
+											</StackPanel>
+											<TextBlock Grid.Row="1"
+													   VerticalAlignment="Center"
+													   Text="{Binding TransactionDescription}"/>
+										</Grid>
+									</Expander>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
