@@ -197,7 +197,7 @@ public class ShowTransactionsViewModel : ViewModelBase
                 foreach (var taggedTransac in taggedTransacs)
                 {
                     // Check if not already filtered by bank account
-                    Transaction t = filteredTransactions.Where(x => x.TransactionId == taggedTransac.TransactionId).FirstOrDefault();
+                    Transaction? t = filteredTransactions.Where(x => x.TransactionId == taggedTransac.TransactionId).FirstOrDefault();
                     if(t != null)
                     {
                         tempTransacs.Add(taggedTransac);
