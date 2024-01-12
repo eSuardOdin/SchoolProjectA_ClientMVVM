@@ -1,7 +1,9 @@
 ﻿using ReactiveUI;
+using SchoolProjectA_ClientMVVM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +27,33 @@ public class TagsViewModel : ViewModelBase
         MoniId = moniId;
         TagsList = new(MoniId);
         TagsContentViewModel = TagsList;
+    }
+
+    /// <summary>
+    /// Showing add tag form
+    /// </summary>
+    public async void AddTag()
+    {
+        AddTagViewModel addTagVM = new AddTagViewModel();
+        Observable.Merge(
+            addTagVM.AddCommand,
+            addTagVM.CancelCommand.Select(_=> (Tag?)null))
+            .Take(1)
+            .Subscribe( async newTag =>
+            {
+                if(newTag != null)
+                {
+                    newTag.MoniId = MoniId;
+                    newTag = await Queries.PostTag(newTag);
+                    if(newTag != null)
+                    {
+                        TagsList.Tags.Add(newTag);
+                    }
+                }
+                TagsContentViewModel = TagsList;
+            }
+        );
+        TagsContentViewModel = addTagVM;
     }
 
 }

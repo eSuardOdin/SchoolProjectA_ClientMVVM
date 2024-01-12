@@ -367,28 +367,42 @@ namespace SchoolProjectA_ClientMVVM.Models
             return null;
         }
 
-        /*public static async Task<List<Transaction>> GetTagTransactions(int moniId, int tagId)
+
+        /// <summary>
+        /// Post a tag to db
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public static async Task<Tag> PostTag(Tag tag)
         {
-            List<Transaction> transactionsTagged = new List<Transaction>();
-            // Let's go for awfulness
-            // Get all moni accounts
-            List<BankAccount>? bankAccounts = await Queries.GetMoniAccounts(moniId);
-            if(bankAccounts != null)
+            using HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            try
             {
-                // Check all accounts transaction
-                foreach(BankAccount bankAccount in bankAccounts)
+                string tagData = JsonConvert.SerializeObject(tag);
+                var content = new StringContent(tagData, Encoding.UTF8, "application/json");
+                HttpResponseMessage res = await client.PostAsync($"http://raspberry:5000/tag", content);
+                if (res.IsSuccessStatusCode)
                 {
-                    List<Transaction>? transactions = await Queries.GetAccountTransactions(bankAccount.BankAccountId);
-                    if (transactions != null)
-                    {
-                        foreach(Transaction t in transactions)
-                        {
-                            System.Diagnostics.Debug.WriteLine(t.)
-                        }
-                    }
+                    string responseData = await res.Content.ReadAsStringAsync();
+                    Tag createdTag = JsonConvert.DeserializeObject<Tag>(responseData);
+                    return createdTag;
+                }
+                else
+                {
+                    var errorResponse = await res.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine(errorResponse);
                 }
             }
-        }*/
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            return null;
+        }
+
 
     }
 }
