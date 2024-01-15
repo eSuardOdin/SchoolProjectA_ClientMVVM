@@ -14,10 +14,10 @@
 				Background="Green"
 				Foreground="White"
 				FontWeight="Bold"
+				Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddTag}"
+				x:CompileBindings="False"
 				>
 			Ajouter une balise
-			<!--Command="{Binding $parent[Window].DataContext.ContentViewModel.ContainedViewModel.AddAccount}"
-				x:CompileBindings="False"-->
 		</Button>
 
 		<ItemsControl ItemsSource="{Binding Tags}">

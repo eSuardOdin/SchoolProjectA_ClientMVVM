@@ -14,17 +14,19 @@ public class AddTagViewModel : ViewModelBase
     private string _tagLabel = string.Empty;
     private string _tagDescription = string.Empty;
     private string _errorMessage = string.Empty;
+    private int MoniId { get; set; }
 
     public ReactiveCommand<Unit, Tag> AddCommand { get; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
 
-    public AddTagViewModel()
+    public AddTagViewModel(int moniId)
     {
+        MoniId = moniId;
         var isValidObservable = this.WhenAnyValue(
             x => x.TagLabel,
             x => !string.IsNullOrWhiteSpace(x));
-        AddCommand = ReactiveCommand.Create(
-            () => CreateTag(), isValidObservable);
+        AddCommand = ReactiveCommand.CreateFromTask(
+            async () => await CreateTag(), isValidObservable);
         CancelCommand = ReactiveCommand.Create(
             () => { });
     }
@@ -48,6 +50,37 @@ public class AddTagViewModel : ViewModelBase
     }
     private async Task<Tag?> CreateTag()
     {
-        return new Tag();
+        if(await CheckForm())
+        {
+            Tag tag = new();
+            tag.TagLabel = TagLabel;
+            tag.TagDescription = TagDescription;
+            tag.MoniId = MoniId;
+            return tag;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    private async Task<bool> CheckForm()
+    {
+        ErrorMessage = string.Empty;
+        // Check for empty message
+        if(TagLabel == null)
+        {
+            ErrorMessage = "Vous devez donner un nom à votre étiquette";
+            return false;
+        }
+        // Check tags labels
+        List<Tag> tags = await Queries.GetMoniTags(MoniId);
+        Tag? tag = tags.Where(x => x.TagLabel == TagLabel).FirstOrDefault();
+        if(tag != null)
+        {
+            ErrorMessage = "Vous avez déjà une étiquette nommé ainsi";
+            return false;
+        }
+        return true;
     }
 }

@@ -23,7 +23,7 @@
 			<!--Error msg-->
 			<TextBlock TextAlignment="Center"
 					   Foreground="Red"
-					   Text="{Binding ErrorMessage"/>
+					   Text="{Binding ErrorMessage}"/>
 			<TextBox Width="250"
 					 Watermark="Nom de la balise"
 					 Text="{Binding TagLabel}"

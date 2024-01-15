@@ -34,7 +34,7 @@ public class TagsViewModel : ViewModelBase
     /// </summary>
     public async void AddTag()
     {
-        AddTagViewModel addTagVM = new AddTagViewModel();
+        AddTagViewModel addTagVM = new AddTagViewModel(MoniId);
         Observable.Merge(
             addTagVM.AddCommand,
             addTagVM.CancelCommand.Select(_=> (Tag?)null))
