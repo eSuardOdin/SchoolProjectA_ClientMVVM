@@ -6,12 +6,14 @@ To do so, I created a  Dev_SchoolProjectA that I will dotnet run instead of my c
 
 Adding to do : 
 
-- Sort transactions by tags 
+- Sort transactions by tags -> Done
   
   - Done : Added GetTagged() in Transaction Controller
   
   - To do : Create the new executable for the moniwatch.service
 
-- Sort transactions by dates
+- Sort transactions by dates -> Done
 
 - PAGING
+
+- Check each user can only have one tag named the same

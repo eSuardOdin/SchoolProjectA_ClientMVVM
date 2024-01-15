@@ -13,6 +13,7 @@ public class AddTagViewModel : ViewModelBase
 {
     private string _tagLabel = string.Empty;
     private string _tagDescription = string.Empty;
+    private string _errorMessage = string.Empty;
 
     public ReactiveCommand<Unit, Tag> AddCommand { get; }
     public ReactiveCommand<Unit, Unit> CancelCommand { get; }
@@ -40,7 +41,12 @@ public class AddTagViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _tagDescription, value);
     }
 
-    private Tag CreateTag()
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
+    }
+    private async Task<Tag?> CreateTag()
     {
         return new Tag();
     }

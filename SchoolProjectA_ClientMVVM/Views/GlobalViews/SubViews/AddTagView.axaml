@@ -7,5 +7,43 @@
 			 xmlns:vm="using:SchoolProjectA_ClientMVVM.ViewModels"
 			 x:DataType="vm:AddTagViewModel"
              x:Class="SchoolProjectA_ClientMVVM.Views.AddTagView">
-  Welcome to Avalonia!
+	<Panel VerticalAlignment="Center">
+		<StackPanel Margin="20"
+					HorizontalAlignment="Center"
+					Grid.Row="0"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Spacing="10"
+					>
+			<TextBlock FontWeight="Bold"
+				   Grid.Row="0"
+				   Grid.ColumnSpan="2"
+				   Text="Ajout d'une Balise"
+				   TextAlignment="Center"/>
+			<!--Error msg-->
+			<TextBlock TextAlignment="Center"
+					   Foreground="Red"
+					   Text="{Binding ErrorMessage"/>
+			<TextBox Width="250"
+					 Watermark="Nom de la balise"
+					 Text="{Binding TagLabel}"
+					 MaxLength="32"/>
+			<TextBox Height="250"
+					Watermark="Description"
+					TextWrapping="Wrap"
+					Text="{Binding TagDescription, Mode=TwoWay}"/>
+			<Grid ColumnDefinitions="*,*">
+				<Button HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Command="{Binding AddCommand}">Ok</Button>
+				<Button Grid.Column="1"
+						HorizontalAlignment="Stretch"
+						HorizontalContentAlignment="Center"
+						Background="Red"
+						Command="{Binding CancelCommand}">
+					Annuler
+				</Button>
+			</Grid>
+		</StackPanel>
+	</Panel>
 </UserControl>
