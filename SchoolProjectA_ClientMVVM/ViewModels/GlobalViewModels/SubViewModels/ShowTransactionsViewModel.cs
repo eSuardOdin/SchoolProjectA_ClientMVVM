@@ -106,11 +106,13 @@ public class ShowTransactionsViewModel : ViewModelBase
     // Init form dates with transactions dates
     private void SetDates()
     {
-
-        TransactionStartDate = (from d in _cachedTransactions select d.TransactionDate).Min();
-        System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Min());
-        TransactionEndDate = (from d in _cachedTransactions select d.TransactionDate).Max();
-        System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Max());
+        if(_cachedTransactions.Count != 0)
+        {
+            TransactionStartDate = (from d in _cachedTransactions select d.TransactionDate).Min();
+            System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Min());
+            TransactionEndDate = (from d in _cachedTransactions select d.TransactionDate).Max();
+            System.Diagnostics.Debug.WriteLine((from d in _cachedTransactions select d.TransactionDate).Max());
+        }
     }
 
     // Load transactions
